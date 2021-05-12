@@ -16,6 +16,8 @@ class SensorsController extends Controller
 
         dd($bodyContent);
 
+        return response($bodyContent,200)
+
     }
     public function show(Request $request){
         
@@ -23,6 +25,7 @@ class SensorsController extends Controller
 
         dd($bodyContent);
 
+        return response($bodyContent,200)
     }
     
 

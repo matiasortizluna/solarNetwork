@@ -28,3 +28,5 @@ use Illuminate\Http\Request;
 
 
 //  });
+
+Route::post('sensors', 'SensorsController@receiveData')

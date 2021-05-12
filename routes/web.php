@@ -15,12 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+//Auth::routes();
 
 //Route::get('/stocks', 'StocksController@index')->name('stocks.index');
 
 
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/unauthorized', 'HomeController@home');
-Auth::routes(['verify' => false]);
-Auth::routes(['register' => false]);
+//Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/unauthorized', 'HomeController@home');
+//Auth::routes(['verify' => false]);
+//Auth::routes(['register' => false]);

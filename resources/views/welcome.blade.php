@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Gestor de Stocks</title>
+    <title>Solar Network</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -35,14 +35,14 @@
             <img src="/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Gestor de Stocks</span>
+            <span class="brand-text font-weight-light">Solar Network</span>
         </a>
         <div class="sidebar">
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link"><i class="nav-icon fas fa-th"></i><span>Stocks</span></router-link>
+                        <router-link to="/" class="nav-link"><i class="nav-icon fas fa-th"></i><span>Dashboard</span></router-link>
                     </li>
                 </ul>
             </nav>

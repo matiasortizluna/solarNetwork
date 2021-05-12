@@ -13,7 +13,7 @@ Vue.use(Vuelidate);
 
 Vue.use(BootstrapVue);
 
-import Stocks from './components/Stocks/stocks';
+import dashboard from './components/dashboard';
 Vue.use(VueRouter);
 
 import Paginate from 'vuejs-paginate';
@@ -32,7 +32,7 @@ Vue.use(VueToastify, {
 });
 
 const routes = [
-    {path: '/', component: Stocks},
+    {path: '/', component: dashboard},
 ];
 
 const router = new VueRouter({

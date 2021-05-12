@@ -13,9 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+//Route::middleware('auth:api')->group(
+   // function () {
+        //Rotas Dashboard
+//        Route::get('produtos/empresa', 'StocksController@index');
+//        Route::put('produto/remover/{id}', 'StocksController@remover');
+//        Route::put('produto/adicionar/{id}', 'StocksController@adicionar');
+//        Route::get('produtos/quantidade', 'StocksController@getProdutosQuantidade');
+//        Route::post('produto/novo', 'StocksController@criar');
+//        Route::get('produto/movimentos/{id_produto}', 'StocksController@getMovimentos');
 
-Route::post('sensors','SensorsController@receiveData')
 
+//  });

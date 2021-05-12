@@ -56,6 +56,7 @@
                 </div>
             </div>
         </div>
+        <button v-on:click="carrega()">Btn1</button>
     </div>
 </template>
 
@@ -72,14 +73,21 @@
         },
         methods: {
             getData() {
-                axios.get("tgrweddafead").then(response => {
+                axios.get("/api/sensors").then(response => {
                     this.currentProd = response.data.currentProd;
                     this.currentConsu = response.data.currentConsu;
                     this.voltagePainel = response.data.voltagePainel;
                     this.voltageBattery = response.data.voltageBattery;
+                    console.log(response)
                 });
             },
-        }
+            carrega(){
+                this.getData();
+            }
+        },
+        mounted() {
+            this.getData();
+        },
     }
 </script>
 

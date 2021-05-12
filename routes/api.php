@@ -30,3 +30,4 @@ use Illuminate\Http\Request;
 //  });
 
 Route::post('sensors', 'SensorsController@receiveData')
+Route::get('sensors', 'SensorsController@show')

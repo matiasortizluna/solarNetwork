@@ -17,5 +17,13 @@ class SensorsController extends Controller
         dd($bodyContent);
 
     }
+    public function show(Request $request){
+        
+        $bodyContent = $request->getContent();
+
+        dd($bodyContent);
+
+    }
+    
 
 }

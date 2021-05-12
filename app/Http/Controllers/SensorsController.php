@@ -11,22 +11,22 @@ class SensorsController extends Controller
 
 
     public function receiveData(Request $request){
-        
+
         $bodyContent = $request->getContent();
 
         dd($bodyContent);
 
-        return response($bodyContent,200)
+        return response($bodyContent,200);
 
     }
     public function show(Request $request){
-        
+
         $bodyContent = $request->getContent();
 
         dd($bodyContent);
 
-        return response($bodyContent,200)
+        return response($bodyContent,200);
     }
-    
+
 
 }

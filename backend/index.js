@@ -1,12 +1,23 @@
 const http = require('http');
 const express = require('express');
+var mongo = require('mongodb');
 
 const app = express();
 const port = 8080;
 
+var axios = require('axios')
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+var MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/manrenewables_db";
+
+const client = new MongoClient(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
@@ -31,84 +42,42 @@ app.get('/', (req, res) => {
 });
 
 app.post('/payload', (req, res) => {
-  //let headers = req.headers
-  //console.log(headers)
   let body = req.body
-  console.log(body)
-
-  const postData = JSON.stringify({
-    todo: 'Buy the milk',
-    body: body
-  })
-  //const options = new URL('http://192.168.4.1/test')
-
-  const options = {
-    host: '192.168.4.1',
-    port: 80,
-    path: '/test',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': Buffer.byteLength(postData)
-    }
-  };
-
-  const reqHttp = http.request(options, (res) => {
-    //console.log(`STATUS: ${res.statusCode}`);
-    //console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-    //res.setEncoding('utf8');
-    res.on('data', (chunk) => {
-      console.log(`BODY: ${chunk}`);
-    });
-    res.on('end', () => {
-      console.log('No more data in response.');
-    });
-  });
-
-  reqHttp.on('error', (e) => {
-    console.error(`problem with request: ${e.message}`);
-  });
-
-  reqHttp.write(postData);
-  reqHttp.end();
-
-
-  let responseData = "Got your info, now go to sleep ;)"
-  res.send(responseData)
-
+  try {
+    let response = addEntry(body)
+    res.send(response)
+  } catch (err) {
+    console.log(err)
+  }
 })
-
-
-app.post('/test', (req, res) => {
-  //console.log(req.body)
-  //console.log(res)
-  var data = 'Response from Endpoint test in Server'
-  res.send(data)
-})
-
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 
+function createCollection() {
+  client.db("manrenewables_db").createCollection("manrenewables_collection", (err, res) => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(res)
+    }
+  })
+}
 
-/*
-    axios.post("http://192.168.4.1/test", {
-        body
-        //everything here is the body of the application
-    }, {
-        headers: {
-            'X-Auth-Token': headers['x-token']
-        }
-    })
-        .then((resp) => {
-            console.log(resp);
-            res.send(resp.data)
-        })
-        .catch((err) => {
-            if (err.response == undefined) {
-                res.status(400).send({ message: "Error on Server Side", data: err })
-            }
-            else {
-                res.status(err.response.status).send({ message: err.response.statusText })
-            }
-        })
-        */
+async function addEntry(payload) {
+  await client.connect();
+  await client.db("manrenewables_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+
+  await client.db("manrenewables_db").collection("manrenewables_collection").insertOne(payload, function (err, res) {
+    if (err) {
+      console.log(err)
+      return err
+    } else {
+      console.log(res)
+      return res
+    }
+  })
+
+  await client.db.close();
+}

@@ -15,6 +15,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/values', (req, res) => {
+  res.send(
+    {
+      "batterVoltage": "1",
+      "solarPanelVoltage": "1.3",
+      "consumptionCurrent": "13",
+      "produciongCurrent": "12",
+    }
+  );
+});
+
 app.get('/', (req, res) => {
   res.send('Hello World, this is our project of ESS. Polytechnic of Leiria.');
 });

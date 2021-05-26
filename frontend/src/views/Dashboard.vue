@@ -11,77 +11,137 @@
       <!-- Content Row -->
       <div class="row">
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-warning shadow h-100 py-2">
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Baterry Voltage</strong>
+            </div>
+
             <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                  >
-                    Battery Voltage
+              <div>
+                <img src="/baterry.png" alt="Battery" class="rounded-circle" height=200px widht=180px/>
+              </div>
+              <br>
+              <p class="card-text">
+                {{values.batterVoltage}}
+              </p>
+            </div>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.batterVoltage != 0" class="col" >
+                    <button type="button" class="btn btn-success">
+                      Active
+                    </button>
                   </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{values.batterVoltage}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                  <div v-show="values.batterVoltage == 0" class="col">
+                    <button type="button" class="btn btn-danger">Disabled</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-warning shadow h-100 py-2">
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Solar Panel Voltage</strong>
+            </div>
+
             <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                  >
-                    Solar Panel Voltage
+              <div>
+                 <img src="/solarpanel.png" alt="Solar Panel" class="rounded-circle" height=200px widht=180px/>
+              </div>
+              <br>
+              <p class="card-text">
+                {{values.solarPanelVoltage}}
+              </p>
+            </div>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.solarPanelVoltage != 0" class="col" >
+                    <button type="button" class="btn btn-success">
+                      Active
+                    </button>
                   </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{values.solarPanelVoltage}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                  <div v-show="values.solarPanelVoltage == 0" class="col">
+                    <button type="button" class="btn btn-danger">Disabled</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-warning shadow h-100 py-2">
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Consumption Current</strong>
+            </div>
+
             <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                  >
-                    Consumption Current
+              <div>
+                 <img src="/currentconsumption.png" alt="Consumption Current" class="rounded-circle" height=200px widht=180px/>
+              </div>
+              <br>
+              <p class="card-text">
+                {{values.consumptionCurrent}}
+              </p>
+            </div>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.consumptionCurrent != 0" class="col" >
+                    <button type="button" class="btn btn-success">
+                      Active
+                    </button>
                   </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{values.consumptionCurrent}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                  <div v-show="values.consumptionCurrent == 0" class="col">
+                    <button type="button" class="btn btn-danger">Disabled</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <div class="card border-left-warning shadow h-100 py-2">
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Produciong Current</strong>
+            </div>
+
             <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div
-                    class="text-xs font-weight-bold text-warning text-uppercase mb-1"
-                  >
-                    Producing Current
+              <div>
+                 <img src="/produciongCurrent.png" alt="Consumption Current" class="rounded-circle" height=200px widht=180px/>
+              </div>
+              <br>
+              <p class="card-text">
+                {{values.produciongCurrent}}
+              </p>
+            </div>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.produciongCurrent != 0" class="col" >
+                    <button type="button" class="btn btn-success">
+                      Active
+                    </button>
                   </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{values.produciongCurrent}}</div>
-                </div>
-                <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                  <div v-show="values.produciongCurrent == 0" class="col">
+                    <button type="button" class="btn btn-danger">Disabled</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,6 +150,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>

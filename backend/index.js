@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 app.get('/values', (req, res) => {
   res.send(
     {
-      "batterVoltage": "1",
+      "batterVoltage": "0",
       "solarPanelVoltage": "1.3",
       "consumptionCurrent": "13",
       "produciongCurrent": "12",

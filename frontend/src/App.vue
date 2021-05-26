@@ -11,7 +11,7 @@
               height="24"
               class="d-inline-block align-text-top"
             />
-            Renowable Platform
+              ManRenewables Platform
           </a>
           <button
             class="navbar-toggler"
@@ -24,22 +24,14 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="row">
+              <div class="col"><router-link to="/">Home</router-link></div>
               <div class="col">
-                <button type="button" class="btn btn-outline-info">
-                  <router-link to="/">Home</router-link>
-                </button>
+                <router-link to="/about">About</router-link>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-outline-info">
-                  <router-link to="/about">About</router-link>
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-outline-info">
-                  <router-link to="/dashboard">Dashboard</router-link>
-                </button>
+                <router-link to="/dashboard">Dashboard</router-link>
               </div>
             </div>
           </div>
@@ -50,8 +42,22 @@
     <div>
       <router-view />
     </div>
-  </div>
+<!--    <LineChart/>-->
+        </div>
+
 </template>
+
+
+<script>
+    import LineChart from "./views/LineChart.vue"
+
+    export default {
+        name: "App",
+        components: {
+            LineChart
+        },
+    };
+</script>
 
 <style>
 #app {

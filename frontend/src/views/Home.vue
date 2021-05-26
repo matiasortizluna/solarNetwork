@@ -7,7 +7,7 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 style="font-size: 60px">Renowable Platform</h1>
+            <h1 style="font-size: 60px">ManRenewables</h1>
             <br />
             <h2>
               The usage of Renowable energies and the most recent technology

@@ -7,33 +7,33 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 style="font-size: 100px">The Big Picture</h1>
-            <br /><br />
-            <h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt
-              voluptates rerum eveniet sapiente repellat esse, doloremque quod
+            <h1 style="font-size: 60px">Renowable Platform</h1>
+            <br />
+            <h2 style="text-align: left; width: 400px">
+              The usage of Renowable energies and the most recent technology
+              bring the agriculture a new better way to produce
             </h2>
           </div>
         </div>
-        <br /><br /><br />
+        <br />
         <div class="authors row" style="text-align: left">
           <div class="col">
             <h1>Fabio Henriques</h1>
-            <p>CEO</p>
+            <p>CEO (Chief Executive Officer)</p>
           </div>
         </div>
         <br />
         <div class="row" style="text-align: left">
           <div class="col">
             <h1>Matias Luna</h1>
-            <p>CEO</p>
+            <p>COO (Chief Operating Officer)</p>
           </div>
         </div>
         <br />
         <div class="row" style="text-align: left">
           <div class="col">
             <h1>Gonçalo Vicente</h1>
-            <p>CEO</p>
+            <p>CTO (Chief Technology Officer)</p>
           </div>
         </div>
       </div>

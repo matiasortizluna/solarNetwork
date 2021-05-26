@@ -7,33 +7,49 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h1 style="font-size: 100px">The Big Picture</h1>
-            <br /><br />
+            <h1 style="font-size: 60px">Renowable Platform</h1>
+            <br />
             <h2>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt
-              voluptates rerum eveniet sapiente repellat esse, doloremque quod
+              The usage of Renowable energies and the most recent technology
+              bring the agriculture a better way to produce
             </h2>
           </div>
         </div>
-        <br /><br /><br />
-        <div class="authors row" style="text-align: left">
-          <div class="col">
-            <h1>Fabio Henriques</h1>
-            <p>CEO</p>
-          </div>
-        </div>
         <br />
-        <div class="row" style="text-align: left">
+        <div class="row">
           <div class="col">
-            <h1>Matias Luna</h1>
-            <p>CEO</p>
+            <br />
+            <div class="authors row" style="text-align: left">
+              <div class="col">
+                <h1>Fabio Henriques</h1>
+                <h5>CEO (Chief Executive Officer)</h5>
+                <p>2182082</p>
+              </div>
+            </div>
+
+            <div class="row" style="text-align: left">
+              <div class="col">
+                <h1>Matias Luna</h1>
+                <h5>COO (Chief Operating Officer)</h5>
+                <p>2182082</p>
+              </div>
+            </div>
+
+            <div class="row" style="text-align: left">
+              <div class="col">
+                <h1>Gonçalo Vicente</h1>
+                <h5>CTO (Chief Technology Officer)</h5>
+                <p>2182082</p>
+              </div>
+            </div>
           </div>
-        </div>
-        <br />
-        <div class="row" style="text-align: left">
           <div class="col">
-            <h1>Gonçalo Vicente</h1>
-            <p>CEO</p>
+            <img
+              src="../assets/landing.png"
+              width="400px"
+              height="400px"
+              style="border-radius: 10%"
+            />
           </div>
         </div>
       </div>
@@ -44,15 +60,10 @@
 <script>
 export default {
   data: function () {
-    return {
-      landing_img: "../frontend/assets/pictures/landing.jpeg",
-    };
+    return {};
   },
 };
 </script>
 
 <style>
-#container {
-  background-image: "landing_img";
-}
 </style>

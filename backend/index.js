@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 var MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/manrenewables_db";
+const url = "mongodb://localhost:27017/renewable_db";
 
 const client = new MongoClient(url, {
   useNewUrlParser: true,
@@ -54,7 +54,7 @@ app.post('/payload', (req, res) => {
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 
 function createCollection() {
-  client.db("manrenewables_db").createCollection("manrenewables_collection", (err, res) => {
+  client.db("renewable_db").createCollection("renewable_db_collection", (err, res) => {
     if (err) {
       console.log(err)
     } else {
@@ -65,11 +65,11 @@ function createCollection() {
 
 async function addEntry(payload) {
   await client.connect();
-  await client.db("manrenewables_db").command({ ping: 1 });
+  await client.db("renewable_db").command({ ping: 1 });
 
   console.log("Connected successfully to Database");
 
-  await client.db("manrenewables_db").collection("manrenewables_collection").insertOne(payload, function (err, res) {
+  await client.db("renewable_db").collection("renewable_db_collection").insertOne(payload, function (err, res) {
     if (err) {
       console.log(err)
       return err

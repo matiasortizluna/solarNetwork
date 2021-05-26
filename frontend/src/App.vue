@@ -27,17 +27,17 @@
           <div>
             <div class="row">
               <div class="col">
-                <button type="button" class="btn btn-outline-info">
+                <button type="button" class="btn btn-outline-warning">
                   <router-link to="/">Home</router-link>
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-outline-info">
+                <button type="button" class="btn btn-outline-warning">
                   <router-link to="/about">About</router-link>
                 </button>
               </div>
               <div class="col">
-                <button type="button" class="btn btn-outline-info">
+                <button type="button" class="btn btn-outline-warning">
                   <router-link to="/dashboard">Dashboard</router-link>
                 </button>
               </div>

@@ -26,12 +26,20 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="row">
-              <div class="col"><router-link to="/">Home</router-link></div>
               <div class="col">
-                <router-link to="/about">About</router-link>
+                <button type="button" class="btn btn-outline-warning">
+                  <router-link to="/">Home</router-link>
+                </button>
               </div>
               <div class="col">
-                <router-link to="/dashboard">Dashboard</router-link>
+                <button type="button" class="btn btn-outline-warning">
+                  <router-link to="/about">About</router-link>
+                </button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-outline-warning">
+                  <router-link to="/dashboard">Dashboard</router-link>
+                </button>
               </div>
             </div>
           </div>

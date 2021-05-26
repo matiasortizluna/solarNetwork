@@ -26,17 +26,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/values', (req, res) => {
-  res.send(
-    {
-      "batterVoltage": "0",
-      "solarPanelVoltage": "1.3",
-      "consumptionCurrent": "13",
-      "produciongCurrent": "12",
-    }
-  );
-});
-
 app.get('/', (req, res) => {
   res.send('Hello World, this is our project of ESS. Polytechnic of Leiria.');
 });
@@ -50,6 +39,22 @@ app.post('/payload', (req, res) => {
     console.log(err)
   }
 })
+
+app.get('/payload', (req, res) => {
+  try {
+    /*
+    let response = {
+      "batterVoltage": "0",
+      "solarPanelVoltage": "1.3",
+      "consumptionCurrent": "13",
+      "produciongCurrent": "12",
+    }*/
+    let response = readValues()
+    res.send(response)
+  } catch (err) {
+    console.log(err)
+  }
+});
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 
@@ -78,6 +83,25 @@ async function addEntry(payload) {
       return res
     }
   })
+
+  await client.db.close();
+}
+
+async function readValues() {
+  await client.connect();
+  await client.db("renewable_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+
+  await client.db("renewable_db").collection("renewable_db_collection").find({}).toArray(function (err, result) {
+    if (err) {
+      console.log(err)
+      return err
+    } else {
+      console.log(res)
+      return res
+    }
+  });
 
   await client.db.close();
 }

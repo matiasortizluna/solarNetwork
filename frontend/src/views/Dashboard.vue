@@ -19,11 +19,17 @@
 
             <div class="card-body">
               <div>
-                <img src="/baterry.png" alt="Battery" class="rounded-circle" height=200px widht=180px/>
+                <img
+                  src="/baterry.png"
+                  alt="Battery"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
               </div>
-              <br>
+              <br />
               <p class="card-text">
-                {{values.batterVoltage}}
+                {{ values.batterVoltage }}
               </p>
             </div>
             <div class="card-footer text-muted">
@@ -32,13 +38,15 @@
               </div>
               <div>
                 <div class="row">
-                  <div v-show="values.batterVoltage != 0" class="col" >
+                  <div v-show="values.batterVoltage != 0" class="col">
                     <button type="button" class="btn btn-success">
                       Active
                     </button>
                   </div>
                   <div v-show="values.batterVoltage == 0" class="col">
-                    <button type="button" class="btn btn-danger">Disabled</button>
+                    <button type="button" class="btn btn-danger">
+                      Disabled
+                    </button>
                   </div>
                 </div>
               </div>
@@ -53,11 +61,17 @@
 
             <div class="card-body">
               <div>
-                 <img src="/solarpanel.png" alt="Solar Panel" class="rounded-circle" height=200px widht=180px/>
+                <img
+                  src="/solarpanel.png"
+                  alt="Solar Panel"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
               </div>
-              <br>
+              <br />
               <p class="card-text">
-                {{values.solarPanelVoltage}}
+                {{ values.solarPanelVoltage }}
               </p>
             </div>
             <div class="card-footer text-muted">
@@ -66,13 +80,15 @@
               </div>
               <div>
                 <div class="row">
-                  <div v-show="values.solarPanelVoltage != 0" class="col" >
+                  <div v-show="values.solarPanelVoltage != 0" class="col">
                     <button type="button" class="btn btn-success">
                       Active
                     </button>
                   </div>
                   <div v-show="values.solarPanelVoltage == 0" class="col">
-                    <button type="button" class="btn btn-danger">Disabled</button>
+                    <button type="button" class="btn btn-danger">
+                      Disabled
+                    </button>
                   </div>
                 </div>
               </div>
@@ -87,11 +103,17 @@
 
             <div class="card-body">
               <div>
-                 <img src="/currentconsumption.png" alt="Consumption Current" class="rounded-circle" height=200px widht=180px/>
+                <img
+                  src="/currentconsumption.png"
+                  alt="Consumption Current"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
               </div>
-              <br>
+              <br />
               <p class="card-text">
-                {{values.consumptionCurrent}}
+                {{ values.consumptionCurrent }}
               </p>
             </div>
             <div class="card-footer text-muted">
@@ -100,13 +122,15 @@
               </div>
               <div>
                 <div class="row">
-                  <div v-show="values.consumptionCurrent != 0" class="col" >
+                  <div v-show="values.consumptionCurrent != 0" class="col">
                     <button type="button" class="btn btn-success">
                       Active
                     </button>
                   </div>
                   <div v-show="values.consumptionCurrent == 0" class="col">
-                    <button type="button" class="btn btn-danger">Disabled</button>
+                    <button type="button" class="btn btn-danger">
+                      Disabled
+                    </button>
                   </div>
                 </div>
               </div>
@@ -121,11 +145,17 @@
 
             <div class="card-body">
               <div>
-                 <img src="/produciongCurrent.png" alt="Consumption Current" class="rounded-circle" height=200px widht=180px/>
+                <img
+                  src="/produciongCurrent.png"
+                  alt="Consumption Current"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
               </div>
-              <br>
+              <br />
               <p class="card-text">
-                {{values.produciongCurrent}}
+                {{ values.produciongCurrent }}
               </p>
             </div>
             <div class="card-footer text-muted">
@@ -134,13 +164,15 @@
               </div>
               <div>
                 <div class="row">
-                  <div v-show="values.produciongCurrent != 0" class="col" >
+                  <div v-show="values.produciongCurrent != 0" class="col">
                     <button type="button" class="btn btn-success">
                       Active
                     </button>
                   </div>
                   <div v-show="values.produciongCurrent == 0" class="col">
-                    <button type="button" class="btn btn-danger">Disabled</button>
+                    <button type="button" class="btn btn-danger">
+                      Disabled
+                    </button>
                   </div>
                 </div>
               </div>
@@ -150,31 +182,29 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
-const axios = require('axios').default;
+const axios = require("axios").default;
 
-    export default {
-        name: "dashboard",
-        data: function () {
-            return {
-               values: []
-            };
-        },
-        methods: {
-            getValues: function () {
-                axios.get("http://localhost:8080/values")
-                    .then(response => {
-                        this.values = response.data;
-                    })
-            },
-        },
-        mounted() {
-            this.getValues();
-        }
-    }
+export default {
+  name: "dashboard",
+  data: function () {
+    return {
+      values: [],
+    };
+  },
+  methods: {
+    getValues: function () {
+      axios.get("http://localhost:8080/values").then((response) => {
+        this.values = response.data;
+      });
+    },
+  },
+  mounted() {
+    this.getValues();
+  },
+};
 </script>
 
 <style>

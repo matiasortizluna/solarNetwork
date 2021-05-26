@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 var MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/renewable_db";
 
+var response
+
 const client = new MongoClient(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -33,7 +35,7 @@ app.get('/', (req, res) => {
 app.post('/payload', (req, res) => {
   let body = req.body
   try {
-    let response = addEntry(body)
+    response = addEntry(body)
     res.send(response)
   } catch (err) {
     console.log(err)
@@ -42,19 +44,37 @@ app.post('/payload', (req, res) => {
 
 app.get('/payload', (req, res) => {
   try {
-    /*
-    let response = {
-      "batterVoltage": "0",
-      "solarPanelVoltage": "1.3",
-      "consumptionCurrent": "13",
-      "produciongCurrent": "12",
-    }*/
-    let response = readValues()
-    res.send(response)
+    setTimeout(() => {
+      readLast()
+      setTimeout(() => {
+        console.log("What's gonna be sent back to client")
+        console.log(response)
+        res.send(response)
+      }, 500)
+    }, 500)
   } catch (err) {
     console.log(err)
   }
 });
+
+app.get('/payload/all', (req, res) => {
+  try {
+    setTimeout(() => {
+      readValues()
+      setTimeout(() => {
+        console.log("What's gonna be sent back to client")
+        console.log(response)
+        res.send(response)
+      }, 500)
+    }, 500)
+
+
+
+  } catch (err) {
+    console.log(err)
+  }
+});
+
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`))
 
@@ -91,17 +111,40 @@ async function readValues() {
   await client.connect();
   await client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
+  await console.log("Connected successfully to Database");
 
-  await client.db("renewable_db").collection("renewable_db_collection").find({}).toArray(function (err, result) {
+  await client.db("renewable_db").collection("renewable_db_collection").find({}).toArray(function (err, res) {
     if (err) {
       console.log(err)
       return err
     } else {
+      console.log("Read values from Database")
       console.log(res)
-      return res
+      response = res
+      //return res
     }
   });
 
-  await client.db.close();
+  await client.db.close;
+}
+
+function readLast() {
+  client.connect();
+  client.db("renewable_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+
+  client.db("renewable_db").collection("renewable_db_collection").findOne({}, function (err, res) {
+    if (err) {
+      console.log(err);
+      return err;
+    } else {
+      console.log("Read values from Database");
+      console.log(res);
+      response = res
+      //return res;
+    }
+  })
+
+  client.db.close;
 }

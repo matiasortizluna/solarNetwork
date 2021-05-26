@@ -6,6 +6,10 @@
       <!-- Page Heading -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+        <button type="button" class="btn btn-info" @click="createValues">
+          Create
+        </button>
       </div>
 
       <!-- Content Row -->
@@ -196,13 +200,32 @@ export default {
   },
   methods: {
     getValues: function () {
-      axios.get("http://localhost:8080/values").then((response) => {
+      axios.get("http://localhost:8080/payload").then((response) => {
         this.values = response.data;
+        console.log(response);
+      });
+    },
+    getAllValues: function () {
+      axios.get("http://localhost:8080/payload/all").then((response) => {
+        //this.values = response.data;
+        console.log(response);
+      });
+    },
+    createValues: function () {
+      let payload = {
+        batterVoltage: "0",
+        solarPanelVoltage: "1.3",
+        consumptionCurrent: "13",
+        produciongCurrent: "12",
+      };
+      axios.post("http://localhost:8080/payload", payload).then((response) => {
+        console.log(response);
       });
     },
   },
   mounted() {
     this.getValues();
+    //this.getAllValues();
   },
 };
 </script>

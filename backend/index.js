@@ -33,7 +33,19 @@ app.get('/', (req, res) => {
 });
 
 app.post('/payload', (req, res) => {
-  let body = req.body
+  //let body = req.body
+  let body = [{
+    hello: 'true',
+    full_date: '2021-05-26 12:51:08',
+    date: {
+      year: '2021',
+      day: '26',
+      month: '05',
+      hour: '12',
+      minute: '51',
+      second: '08'
+    }
+  }]
   try {
     response = addEntry(body)
     res.send(response)
@@ -45,7 +57,20 @@ app.post('/payload', (req, res) => {
 app.get('/payload', (req, res) => {
   try {
     setTimeout(() => {
-      readLast()
+      //readLast()
+
+      response = {
+        hello: 'true',
+        full_date: '2021-05-26 12:51:08',
+        date: {
+          year: '2021',
+          day: '26',
+          month: '05',
+          hour: '12',
+          minute: '51',
+          second: '08'
+        }
+      }
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -60,7 +85,41 @@ app.get('/payload', (req, res) => {
 app.get('/payload/all', (req, res) => {
   try {
     setTimeout(() => {
-      readValues()
+      //readValues()
+      response = [{
+        hello: 'true',
+        full_date: '2021-05-26 12:51:08',
+        date: {
+          year: '2021',
+          day: '26',
+          month: '05',
+          hour: '12',
+          minute: '51',
+          second: '08'
+        }
+      }, {
+        hello: 'true',
+        full_date: '2021-05-26 12:51:08',
+        date: {
+          year: '2021',
+          day: '26',
+          month: '05',
+          hour: '12',
+          minute: '51',
+          second: '08'
+        }
+      }, {
+        hello: 'true',
+        full_date: '2021-05-26 12:51:08',
+        date: {
+          year: '2021',
+          day: '26',
+          month: '05',
+          hour: '12',
+          minute: '51',
+          second: '08'
+        }
+      }]
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)

@@ -498,7 +498,7 @@ export default {
             this.data.ano
         )
         .then((response) => {
-          console.log("DATA BY VALUE");
+          console.log("DATA BY DATE");
           console.log(response);
           this.dados.consumed = response.data.consumed;
           this.dados.produced = response.data.produced;

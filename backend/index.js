@@ -64,7 +64,6 @@ app.get('/payload', (req, res) => {
       // If Databse configured
       //response = readLast()
       // If NO Databse configured
-
       response = {
         battery_voltage: 15,
         solar_panel_voltage: 15,

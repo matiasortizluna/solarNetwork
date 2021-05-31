@@ -259,57 +259,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-2">
-        <br />
-        <br />
-        <label class="h3 mr-3 text-gray-800">Data</label>
-        <input
-          v-model="data"
-          id="date"
-          type="date"
-          min="1899-01-01"
-          max="2030-12-12"
-          v-on:change="getDataByDay"
-        />
-      </div>
-      <div class="col-md-10"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <LineChart :data="dados" />
-        <div class="card-body">
-          <div>
-            <img
-              src="/produciongCurrent.png"
-              alt="Consumption Current"
-              class="rounded-circle"
-              height="200px"
-              widht="180px"
-            />
-          </div>
-          <br />
-          <p class="card-text">
-            {{ values.producing_current }}
-          </p>
-        </div>
-        <div class="card-footer text-muted">
-          <div>
-            <p>State</p>
-          </div>
-          <div>
-            <div class="row">
-              <div v-show="values.producing_current != 0" class="col">
-                <button type="button" class="btn btn-success">Active</button>
-              </div>
-              <div v-show="values.producing_current == 0" class="col">
-                <button type="button" class="btn btn-danger">Disabled</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

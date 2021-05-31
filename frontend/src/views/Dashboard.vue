@@ -1,7 +1,4 @@
 <template>
-    <div>
-        <br/>
-        <br/>
         <div class="container-fluid">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -19,7 +16,6 @@
                         <div class="card-header">
                             <strong>Baterry Voltage</strong>
                         </div>
-
                         <div class="card-body">
                             <div>
                                 <img
@@ -185,7 +181,6 @@
                     </div>
                 </div>
             </div>
-            <div>
                 <div class="row">
                     <div class="col-md-3" style="padding-right: 5%;">
                         <br>
@@ -203,7 +198,6 @@
 
                     </div>
                 </div>
-            </div>
             <div v-if="opcao == 'dia'">
                 <div class="row">
                     <div class="col-md-2">
@@ -255,7 +249,7 @@
                         <select v-model="data.ano"
                                 style="background: transparent;padding-left: 10px;border: 1px solid black;">
                             <option value="" disabled selected>Year</option>
-                            <option v-for="ano in anos" :value="ano">{{ano}}</option>
+                            <option v-for="ano in anos" :value="ano" :key="ano">{{ano}}</option>
                         </select>
                     </div>
                     <div class="col-md-10">
@@ -269,7 +263,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>

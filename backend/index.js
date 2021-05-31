@@ -62,9 +62,9 @@ app.get('/payload', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readLast()
+      //response = readLast()
       // If NO Databse configured
-      /*
+
       response = {
         battery_voltage: 15,
         solar_panel_voltage: 15,
@@ -80,7 +80,7 @@ app.get('/payload', (req, res) => {
           second: '43'
         }
       }
-      */
+
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -116,11 +116,11 @@ app.get('/months', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readMonths()
+      //response = readMonths()
       // If NO Databse configured
-      /*
-      response = ['05','06','11']
-      */
+
+      response = ['05', '06', '11']
+
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -157,11 +157,11 @@ app.get('/years', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readYears()
+      //response = readYears()
       // If NO Databse configured
-      /*
-      response = ['2021','2020','2019']
-      */
+
+      response = ['2021', '2020', '2019']
+
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -222,9 +222,9 @@ app.get('/values/:dia/:mes/:ano', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readDataByDate(req.params.dia, req.params.mes, req.params.ano)
+      //response = readDataByDate(req.params.dia, req.params.mes, req.params.ano)
       // If NO Databse configured
-      //response = { consumed: 0.22, produced: 0.43 }
+      response = { consumed: 0.22, produced: 0.43 }
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -266,12 +266,12 @@ app.get('/payload/all', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readValues()
+      //response = readValues()
       // If NO Databse configured
-      /*
+
       response = [
         {
-          _id: 60b4f7f87bcfb8042ffef239,
+          _id: '60b4f7f87bcfb8042ffef239',
           battery_voltage: 13,
           solar_panel_voltage: 13,
           consumption_current: 0.23,
@@ -287,7 +287,7 @@ app.get('/payload/all', (req, res) => {
           }
         },
         {
-          _id: 60b50bf6fb30cc0d4dc10455,
+          _id: '60b50bf6fb30cc0d4dc10455',
           battery_voltage: 14,
           solar_panel_voltage: 14,
           consumption_current: 0.24,
@@ -303,7 +303,7 @@ app.get('/payload/all', (req, res) => {
           }
         },
         {
-          _id: 60b50bfcfb30cc0d4dc10456,
+          _id: '60b50bfcfb30cc0d4dc10456',
           battery_voltage: 15,
           solar_panel_voltage: 15,
           consumption_current: 0.25,
@@ -319,7 +319,7 @@ app.get('/payload/all', (req, res) => {
           }
         }
       ]
-      */
+
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -355,9 +355,9 @@ function addEntry(payload) {
 //Endpoint to add an entry to the database
 app.post('/payload', (req, res) => {
   // If Databse configured
-  let body = req.body
+  //let body = req.body
   // If NO Databse configured
-  /*
+
   let body = {
     battery_voltage: 16,
     solar_panel_voltage: 16,
@@ -373,7 +373,7 @@ app.post('/payload', (req, res) => {
       second: '12'
     }
   }
-  */
+
   console.log(body)
   try {
     response = addEntry(body)

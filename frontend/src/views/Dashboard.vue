@@ -4,10 +4,13 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
       <button type="button" class="btn btn-info" @click="getAllValues">
-        All
+        Get All Entries
       </button>
       <button type="button" class="btn btn-info" @click="createValues">
-        Create
+        Create New Values
+      </button>
+      <button type="button" class="btn btn-info" @click="getDataByValue">
+        Get Data by Date
       </button>
     </div>
     <!-- Content Row -->
@@ -455,9 +458,9 @@ export default {
         "Dec",
       ],
       data: {
-        dia: null,
-        mes: null,
-        ano: null,
+        dia: "31",
+        mes: "05",
+        ano: "2021",
       },
       opcao: " ",
       meses: [],
@@ -469,7 +472,8 @@ export default {
       axios
         .get("http://localhost:8080/payload")
         .then((response) => {
-          console.log(response.data);
+          console.log("LAST VALUE");
+          console.log(response);
           this.values = response.data;
         })
         .catch((err) => {
@@ -478,6 +482,7 @@ export default {
     },
     getAllValues: function () {
       axios.get("http://localhost:8080/payload/all").then((response) => {
+        console.log("ALL ENTRIES");
         //this.values = response.data;
         console.log(response);
       });
@@ -485,32 +490,40 @@ export default {
     getDataByValue: function () {
       axios
         .get(
-          "http://localhost:8080/values?" +
-            "&dia=" +
+          "http://localhost:8080/values/" +
             this.data.dia +
-            "&mes=" +
+            "/" +
             this.data.mes +
-            "&ano=" +
+            "/" +
             this.data.ano
         )
         .then((response) => {
+          console.log("DATA BY VALUE");
+          console.log(response);
           this.dados.consumed = response.data.consumed;
           this.dados.produced = response.data.produced;
+          console.log(this.dados);
         });
     },
     getAllMonths: function () {
       axios.get("http://localhost:8080/months").then((response) => {
+        console.log("MESES");
         console.log(response);
         this.meses = response.data;
+        console.log(this.meses);
       });
     },
     getAllYears: function () {
       axios.get("http://localhost:8080/years").then((response) => {
+        console.log("ANOS");
         console.log(response);
-        this.anos = response.data.data;
+        this.anos = response.data;
+        console.log(this.anos);
       });
     },
     createValues: function () {
+      //Este é o objeto que guarda na base de dados, é objeto enviado pelo ESP + os dados que acrescenta
+      //o RASP, e que depois o back põe dentro da bd.
       let body = {
         battery_voltage: 13,
         solar_panel_voltage: 13,
@@ -527,6 +540,7 @@ export default {
         },
       };
       axios.post("http://localhost:8080/payload", body).then((response) => {
+        console.log("NEW");
         console.log(response);
       });
     },

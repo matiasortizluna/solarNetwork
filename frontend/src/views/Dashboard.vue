@@ -540,7 +540,7 @@ export default {
         },
       };
       axios.post("http://localhost:8080/payload", body).then((response) => {
-        console.log("NEW");
+        console.log("NEW ENTRY");
         console.log(response);
       });
     },

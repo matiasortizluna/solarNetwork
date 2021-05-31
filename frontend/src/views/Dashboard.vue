@@ -213,10 +213,6 @@
                         <input v-model="data.dia" id="date" type="date"
                                min='1899-01-01' max='2030-12-12'
                                v-on:change="getDataByValue">
-
-                        <div class="col-md-5">
-
-                        </div>
                     </div>
                     <div class="col-md-10">
 
@@ -234,7 +230,8 @@
                         <br>
                         <br>
                         <label class="h3 mr-3 text-gray-800">Month</label>
-                        <select v-model="data.mes" style="background: transparent;padding-left: 10px;border: 1px solid black;">
+                        <select v-model="data.mes"
+                                style="background: transparent;padding-left: 10px;border: 1px solid black;">
                             <option value="" disabled selected>Month</option>
                             <option v-for="mes in meses" :value="mes">{{mes}}</option>
                         </select>
@@ -255,7 +252,8 @@
                         <br>
                         <br>
                         <label class="h3 mr-3 text-gray-800">Year</label>
-                        <select v-model="data.ano" style="background: transparent;padding-left: 10px;border: 1px solid black;">
+                        <select v-model="data.ano"
+                                style="background: transparent;padding-left: 10px;border: 1px solid black;">
                             <option value="" disabled selected>Year</option>
                             <option v-for="ano in anos" :value="ano">{{ano}}</option>
                         </select>
@@ -269,62 +267,8 @@
                         <LineChart :data="dados" :labels="labelsYear"/>
                     </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2">
-          <br />
-          <br />
-          <label class="h3 mr-3 text-gray-800">Data</label>
-          <input
-            v-model="data"
-            id="date"
-            type="date"
-            min="1899-01-01"
-            max="2030-12-12"
-            v-on:change="getDataByDay"
-          />
-        </div>
-        <div class="col-md-10"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <LineChart :data="dados" />
-          <div class="card-body">
-            <div>
-              <img
-                src="/produciongCurrent.png"
-                alt="Consumption Current"
-                class="rounded-circle"
-                height="200px"
-                widht="180px"
-              />
-            </div>
-            <br />
-            <p class="card-text">
-              {{ values.produciongCurrent }}
-            </p>
-          </div>
-          <div class="card-footer text-muted">
-            <div>
-              <p>State</p>
-            </div>
-            <div>
-              <div class="row">
-                <div v-show="values.produciongCurrent != 0" class="col">
-                  <button type="button" class="btn btn-success">Active</button>
-                </div>
-                <div v-show="values.produciongCurrent == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disabled</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 </template>
 
@@ -377,19 +321,19 @@
                 });
             },
             getDataByValue: function () {
-                axios.get("http://localhost:8080/values?" + '&dia=' + this.data.dia + '&mes=' + this.data.mes +'&ano=' + this.data.ano)
+                axios.get("http://localhost:8080/values?" + '&dia=' + this.data.dia + '&mes=' + this.data.mes + '&ano=' + this.data.ano)
                     .then(response => {
                         this.dados.consumed = response.data.consumed;
                         this.dados.produced = response.data.produced;
                     })
             },
-            getAllMonths: function(){
+            getAllMonths: function () {
                 axios.get("http://localhost:8080/months")
                     .then(response => {
                         this.meses = response.data.data;
                     })
             },
-            getAllYears: function(){
+            getAllYears: function () {
                 axios.get("http://localhost:8080/years")
                     .then(response => {
                         this.anos = response.data.data;
@@ -416,12 +360,12 @@
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    #app {
+        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
 </style>

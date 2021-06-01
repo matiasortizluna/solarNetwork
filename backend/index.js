@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
-const importedFunctions = require('./functions.js')
 
 app.get('/', (req, res) => {
   res.send('Hello World, this is our project of ESS. Polytechnic of Leiria.');
@@ -62,9 +61,9 @@ app.get('/payload', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      //response = readLast()
+      response = readLast()
       // If NO Databse configured
-      response = {
+      /*response = {
         battery_voltage: 15,
         solar_panel_voltage: 15,
         consumption_current: 0.25,
@@ -78,7 +77,7 @@ app.get('/payload', (req, res) => {
           minute: '58',
           second: '43'
         }
-      }
+      }*/
 
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
@@ -91,7 +90,7 @@ app.get('/payload', (req, res) => {
   }
 });
 
-//------------------ LER OS MESES DOS REGISTROS DA BD  --------------------------------------
+//------------------ LER OS MESES DOS REGISTOS DA BD  --------------------------------------
 //Function that reads all the months existing in the data from the database
 function readMonths() {
   client.connect();
@@ -99,7 +98,7 @@ function readMonths() {
 
   console.log("Connected successfully to Database");
 
-  let result = client.db("renewable_db").collection("renewable_db_collection").distinct('date.month').then((res) => {
+  client.db("renewable_db").collection("renewable_db_collection").distinct('date.month').then((res) => {
     console.log(res)
     response = res
     return res
@@ -115,7 +114,7 @@ app.get('/months', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      //response = readMonths()
+      response = readMonths()
       // If NO Databse configured
 
       response = ['05', '06', '11']
@@ -156,10 +155,10 @@ app.get('/years', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      //response = readYears()
+      response = readYears()
       // If NO Databse configured
 
-      response = ['2021', '2020', '2019']
+      //response = ['2021', '2020', '2019']
 
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
@@ -221,9 +220,9 @@ app.get('/values/:dia/:mes/:ano', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      //response = readDataByDate(req.params.dia, req.params.mes, req.params.ano)
+      response = readDataByDate(req.params.dia, req.params.mes, req.params.ano)
       // If NO Databse configured
-      response = { consumed: 0.22, produced: 0.43 }
+      //response = { consumed: 0.22, produced: 0.43 }
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -265,10 +264,10 @@ app.get('/payload/all', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      //response = readValues()
+      response = readValues()
       // If NO Databse configured
 
-      response = [
+      /*response = [
         {
           _id: '60b4f7f87bcfb8042ffef239',
           battery_voltage: 13,
@@ -317,7 +316,7 @@ app.get('/payload/all', (req, res) => {
             second: '12'
           }
         }
-      ]
+      ]*/
 
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
@@ -354,10 +353,10 @@ function addEntry(payload) {
 //Endpoint to add an entry to the database
 app.post('/payload', (req, res) => {
   // If Databse configured
-  //let body = req.body
+  let body = req.body
   // If NO Databse configured
 
-  let body = {
+ /* let body = {
     battery_voltage: 16,
     solar_panel_voltage: 16,
     consumption_current: 0.26,
@@ -371,7 +370,7 @@ app.post('/payload', (req, res) => {
       minute: '23',
       second: '12'
     }
-  }
+  }*/
 
   console.log(body)
   try {

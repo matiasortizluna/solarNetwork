@@ -171,7 +171,7 @@
         <br />
         <label class="h3 mr-3 text-gray-800">Show statics</label>
 
-        <select v-model="opcao">
+        <select v-model="opcao" @change="chartChanged($event)">
           <option disabled value=" ">Select a option</option>
           <option value="dia">For day</option>
           <option value="mes">For month</option>
@@ -199,11 +199,6 @@
         </div>
         <div class="col-md-10"></div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <LineChart :data="dados" :labels="labelsDay" />
-        </div>
-      </div>
     </div>
     <div v-if="opcao == 'mes'">
       <div class="row">
@@ -220,15 +215,10 @@
             "
           >
             <option value="" disabled selected>Month</option>
-            <option v-for="mes in meses" :value="mes">{{ mes }}</option>
+            <option v-for="mes in meses" :value="mes" :key="mes">{{ mes }}</option>
           </select>
         </div>
         <div class="col-md-10"></div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <LineChart :data="dados" :labels="labelsMonth" />
-        </div>
       </div>
     </div>
     <div v-if="opcao == 'ano'">
@@ -253,12 +243,12 @@
         </div>
         <div class="col-md-10"></div>
       </div>
-      <div class="row">
+    </div>
+    <div class="row">
         <div class="col-md-12">
-          <LineChart :data="dados" :labels="labelsYear" />
+          <LineChart :key="dados.consumed" :data="dados" :labels="labels" />
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -280,60 +270,12 @@ export default {
     return {
       values: {},
       dados: {
-        consumed: [
-          2,
-          5,
-          8,
-          4,
-          9,
-          6,
-          1,
-          9,
-          5.22,
-          6.33,
-          15,
-          0.15,
-          0.6,
-          8,
-          4,
-          6,
-          3,
-          7,
-          6,
-          2.33,
-          5,
-          1.22,
-          1.02,
-          3,
-        ],
-        produced: [
-          2,
-          5,
-          8,
-          4,
-          9,
-          6,
-          1,
-          9,
-          5.22,
-          6.33,
-          15,
-          0.15,
-          0.6,
-          8,
-          4,
-          6,
-          3,
-          7,
-          6,
-          2.33,
-          8,
-          4.22,
-          4.02,
-          1,
-        ],
+        consumed: [],
+        produced: [],
       },
-      labelsDay: [
+      labels: [],
+      labelsDef:{
+          'dia': [
         "00:00",
         "01:00",
         "02:00",
@@ -358,8 +300,8 @@ export default {
         "21:00",
         "22:00",
         "23:00",
-      ],
-      labelsMonth: [
+            ],
+          'mes': [
         "01",
         "02",
         "03",
@@ -391,8 +333,8 @@ export default {
         29,
         30,
         31,
-      ],
-      labelsYear: [
+            ],
+          'ano': [
         "Jan",
         "Feb",
         "Mar",
@@ -406,12 +348,14 @@ export default {
         "Nov",
         "Dec",
       ],
+
+      },
       data: {
         dia: "31",
         mes: "05",
         ano: "2021",
       },
-      opcao: " ",
+      opcao: "dia",
       meses: [],
       anos: [],
     };
@@ -493,9 +437,14 @@ export default {
         console.log(response);
       });
     },
+    chartChanged(event){
+        this.labels = this.labelsDef[event.target.value]
+    }
   },
   mounted() {
+    this.labels = this.labelsDef.dia
     this.getValues();
+    
     setTimeout(() => {
       this.getAllMonths();
       setTimeout(() => {

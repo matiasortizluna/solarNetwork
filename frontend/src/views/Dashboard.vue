@@ -3,6 +3,31 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+      <button type="button" class="btn btn-info" @click="getAllValues">
+        Get All Entries
+      </button>
+      <button type="button" class="btn btn-info" @click="getAllMonthsByYear">
+        Get All Months
+      </button>
+      <button
+        type="button"
+        class="btn btn-info"
+        @click="getAllDaysByMonthAndYear"
+      >
+        Get All Days
+      </button>
+      <button type="button" class="btn btn-info" @click="createValues">
+        Create New Values
+      </button>
+      <button type="button" class="btn btn-info" @click="getDataByDay">
+        Get Data by Day
+      </button>
+      <button type="button" class="btn btn-info" @click="getDataByMonth">
+        Get Data by Month
+      </button>
+      <button type="button" class="btn btn-info" @click="getDataByYear">
+        Get Data by Year
+      </button>
     </div>
     <!-- Content Row -->
     <div class="row">
@@ -379,7 +404,7 @@ export default {
       dias: null,
       meses: null,
       anos: null,
-        dateString: null
+      dateString: null,
     };
   },
   methods: {
@@ -390,8 +415,7 @@ export default {
           //console.log("LAST VALUE");
           //console.log(response);
           this.values = response.data;
-            this.getAllYears();
-
+          this.getAllYears();
         })
         .catch((err) => {
           //console.log(err);
@@ -444,23 +468,25 @@ export default {
           //console.log(this.dados);
         });
     },
-      getAllDaysByMonthAndYear: function (month, year) {
-        console.log("Entrou")
-      axios.get("http://localhost:8080/days/" + month +"/" +year).then((response) => {
-        console.log("MESES");
+    getAllDaysByMonthAndYear: function (month, year) {
+      console.log("Entrou");
+      axios
+        .get("http://localhost:8080/days/" + month + "/" + year)
+        .then((response) => {
+          console.log("MESES");
+          //console.log(response);
+          this.dias = response.data;
+        });
+    },
+    getAllMonthsByYear: function (year) {
+      console.log("Entrou 1 ");
+      axios.get("http://localhost:8080/months/" + year).then((response) => {
+        console.log("Ano");
         //console.log(response);
-        this.dias = response.data;
+        this.meses = response.data;
+        //console.log(this.meses);
       });
     },
-      getAllMonthsByYear: function(year){
-          console.log("Entrou 1 ")
-          axios.get("http://localhost:8080/months/" +year).then((response) => {
-              console.log("Ano");
-              //console.log(response);
-              this.meses = response.data;
-              //console.log(this.meses);
-          });
-      },
     getAllYears: function () {
       axios.get("http://localhost:8080/years").then((response) => {
         //console.log("ANOS");
@@ -513,30 +539,37 @@ export default {
       }
     },
     getData() {
-        let url;
-        if(!this.data.dia && this.data.mes){
-            url = "http://localhost:8080/values/days/" + this.data.mes + "/" + this.data.ano;
-        }else if(!this.data.mes){
-            url = "http://localhost:8080/values/months/" + this.data.ano;
-        }else{
-            url = "http://localhost:8080/values/hours/" + this.data.dia + "/" + this.data.mes + "/" + this.data.ano;
-        }
+      let url;
+      if (!this.data.dia && this.data.mes) {
+        url =
+          "http://localhost:8080/values/days/" +
+          this.data.mes +
+          "/" +
+          this.data.ano;
+      } else if (!this.data.mes) {
+        url = "http://localhost:8080/values/months/" + this.data.ano;
+      } else {
+        url =
+          "http://localhost:8080/values/hours/" +
+          this.data.dia +
+          "/" +
+          this.data.mes +
+          "/" +
+          this.data.ano;
+      }
 
-        axios
-            .get(url)
-            .then((response) => {
-                console.log(response.data);
+      axios.get(url).then((response) => {
+        console.log(response.data);
 
-                response.data.forEach(
-                    (item)=>{
-                        this.dados.consumed.push(item.consumed);
-                        this.dados.produced.push(item.produced);
-                    }
-                )
+        response.data.forEach((item) => {
+          this.dados.consumed.push(item.consumed);
+          this.dados.produced.push(item.produced);
 
-                this.rerender = !this.rerender;
-            });
+                          this.rerender = !this.rerender;
 
+        });
+
+      });
     },
   },
   mounted() {

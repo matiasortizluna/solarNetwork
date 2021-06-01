@@ -132,6 +132,47 @@ app.get('/months/:year', (req, res) => {
   }
 });
 
+//------------------ LER OS DIAS DOS REGISTOS DA BD  --------------------------------------
+//Function that reads all the months existing in the data from the database
+function readDays(mes, ano) {
+  client.connect();
+  client.db("renewable_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+  console.log(ano)
+  client.db("renewable_db").collection("renewable_db_collection").distinct('date.day', { 'date.year': ano, 'date.month': mes }).then((res) => {
+    console.log(res)
+    response = res
+    return res
+  }).catch((err) => {
+    console.log(err)
+    return err
+  })
+
+  client.db.close;
+}
+//Endpoint to read all the months existing in the data from the database
+app.get('/days/:month/:year', (req, res) => {
+  try {
+    setTimeout(() => {
+      // If Databse configured
+      response = readDays(req.params.month, req.params.year)
+      // If NO Databse configured
+
+      //response = ['05', '06', '11']
+
+      setTimeout(() => {
+        console.log("What's gonna be sent back to client")
+        console.log(response)
+        res.send(response)
+      }, 500)
+    }, 500)
+
+  } catch (err) {
+    console.log(err)
+  }
+});
+
 //------------------ LER OS ANOS DOS REGISTOS DA BD  --------------------------------------
 //Function that reads all the years existing in the data from the database
 function readYears() {

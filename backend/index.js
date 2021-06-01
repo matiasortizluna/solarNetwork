@@ -175,6 +175,8 @@ app.get('/years', (req, res) => {
 
 //------------------ LER REGISTOS DE ACORDO COM O DIA  --------------------------------------
 //Function that reads data according to date, calculates the mean
+
+
 function readDataByDay(dia, mes, ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
@@ -186,7 +188,7 @@ function readDataByDay(dia, mes, ano) {
     $or: [
       { 'date.year': { $in: [ano] } },
       { 'date.month': { $in: [mes] } },
-      { 'date.dia': { $in: [dia] } }]
+      { 'date.day': { $in: [dia] } }]
   }).toArray(function (err, res) {
     if (err) {
       console.log(err);
@@ -199,22 +201,17 @@ function readDataByDay(dia, mes, ano) {
       for (var i = 1; i < new Array(25).length; i++) {
         media[i] = {
           consumed: 0,
-          produced: 0
+          produced: 0,
+          items: 0
         }
-      }
-      var index = 1;
-      res.forEach(object => {
-        if (object.date.hour < index) {
-          media[index].consumed += parseFloat(object.consumption_current)
-          media[index].produced += parseFloat(object.producing_current)
-        } else {
-          if (media[index].consumed == NaN || media[index].produced == NaN) {
-            media[index].consumed = 0
-            media[index].produced = 0
+        res.forEach(object => {
+          if (object.date.hour == i) {
+            media[i].consumed += parseFloat(object.consumption_current)
+            media[i].produced += parseFloat(object.producing_current)
+            media[i].items++;
           }
-          index++
-        }
-      })
+        })
+      }
     }
     console.log(media)
     response = media
@@ -302,6 +299,7 @@ app.get('/values/days/:mes/:ano', (req, res) => {
 
 //------------------ LER REGISTOS DE ACORDO COM A ANO  --------------------------------------
 //Function that reads data according to date, calculates the mean
+
 function readDataByYear(ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
@@ -324,28 +322,22 @@ function readDataByYear(ano) {
       for (var i = 1; i < new Array(13).length; i++) {
         media[i] = {
           consumed: 0,
-          produced: 0
+          produced: 0,
+          items: 0
         }
-      }
-      var index = 1;
-      res.forEach(object => {
-        if (object.date.month < index) {
-          media[index].consumed += parseFloat(object.consumption_current)
-          media[index].produced += parseFloat(object.producing_current)
-        } else {
-          if (media[index].consumed == NaN || media[index].produced == NaN) {
-            media[index].consumed = 0
-            media[index].produced = 0
+        res.forEach(object => {
+          if (object.date.month == i) {
+            media[i].consumed += parseFloat(object.consumption_current)
+            media[i].produced += parseFloat(object.producing_current)
+            media[i].items++;
           }
-          index++
-        }
-      })
-      console.log(media)
-      response = media
-      return media;
+        })
+      }
     }
+    console.log(media)
+    response = media
+    return media;
   })
-
   client.db.close;
 }
 //Endpoint that reads data according to date, calculates the mean

@@ -29,12 +29,13 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
+//const importedFunctions = require('./functions.js')
 
 app.get('/', (req, res) => {
   res.send('Hello World, this is our project of ESS. Polytechnic of Leiria.');
 });
 
-//------------------ LER ULTIMO REGISTRO DA BD  --------------------------------------
+//------------------ LER ULTIMO REGISTO DA BD  --------------------------------------
 //Function that reads the most recent entry in database
 function readLast() {
   client.connect();
@@ -63,7 +64,8 @@ app.get('/payload', (req, res) => {
       // If Databse configured
       response = readLast()
       // If NO Databse configured
-      /*response = {
+      /*
+      response = {
         battery_voltage: 15,
         solar_panel_voltage: 15,
         consumption_current: 0.25,
@@ -78,7 +80,6 @@ app.get('/payload', (req, res) => {
           second: '43'
         }
       }*/
-
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -98,7 +99,7 @@ function readMonths() {
 
   console.log("Connected successfully to Database");
 
-  client.db("renewable_db").collection("renewable_db_collection").distinct('date.month').then((res) => {
+  let result = client.db("renewable_db").collection("renewable_db_collection").distinct('date.month').then((res) => {
     console.log(res)
     response = res
     return res
@@ -117,7 +118,7 @@ app.get('/months', (req, res) => {
       response = readMonths()
       // If NO Databse configured
 
-      response = ['05', '06', '11']
+      //response = ['05', '06', '11']
 
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
@@ -131,7 +132,7 @@ app.get('/months', (req, res) => {
   }
 });
 
-//------------------ LER OS ANOS DOS REGISTROS DA BD  --------------------------------------
+//------------------ LER OS ANOS DOS REGISTOS DA BD  --------------------------------------
 //Function that reads all the years existing in the data from the database
 function readYears() {
   client.connect();
@@ -172,16 +173,16 @@ app.get('/years', (req, res) => {
   }
 });
 
-//------------------ LER REGISTROS DE ACORDO COM A DATA  --------------------------------------
+//------------------ LER REGISTOS DE ACORDO COM O DIA  --------------------------------------
 //Function that reads data according to date, calculates the mean
-function readDataByDate(dia, mes, ano) {
+function readDataByDay(dia, mes, ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
   console.log("Connected successfully to Database");
-  console.log(dia + " " + mes + " " + ano)
+  console.log(dia + " / " + mes + " / " + ano)
 
-  let result = client.db("renewable_db").collection("renewable_db_collection").find({
+  client.db("renewable_db").collection("renewable_db_collection").find({
     $or: [
       { 'date.year': { $in: [ano] } },
       { 'date.month': { $in: [mes] } },
@@ -194,18 +195,151 @@ function readDataByDate(dia, mes, ano) {
       console.log("Read values from Database");
       console.log(res);
 
-      var media = {
-        consumed: 0,
-        produced: 0
-      };
-      var index = 0;
+      var media = {}
+      for (var i = 1; i < new Array(25).length; i++) {
+        media[i] = {
+          consumed: 0,
+          produced: 0
+        }
+      }
+      var index = 1;
       res.forEach(object => {
-        media.consumed += parseFloat(object.consumption_current)
-        media.produced += parseFloat(object.producing_current)
-        index++;
-      });
-      media.consumed = media.consumed / index
-      media.produced = media.produced / index
+        if (object.date.hour < index) {
+          media[index].consumed += parseFloat(object.consumption_current)
+          media[index].produced += parseFloat(object.producing_current)
+        } else {
+          if (media[index].consumed == NaN || media[index].produced == NaN) {
+            media[index].consumed = 0
+            media[index].produced = 0
+          }
+          index++
+        }
+      })
+    }
+    console.log(media)
+    response = media
+    return media;
+  })
+  client.db.close;
+}
+//Endpoint that reads data according to date, calculates the mean
+app.get('/values/hours/:dia/:mes/:ano', (req, res) => {
+  console.log(req.params)
+  try {
+    setTimeout(() => {
+      response = readDataByDay(req.params.dia, req.params.mes, req.params.ano)
+      setTimeout(() => {
+        console.log("What's gonna be sent back to client")
+        console.log(response)
+        res.send(response)
+      }, 500)
+    }, 500)
+  } catch (err) {
+    console.log(err)
+  }
+});
+
+//------------------ LER REGISTOS DE ACORDO COM A MES  --------------------------------------
+//Function that reads data according to date, calculates the mean
+
+function readDataByMonth(mes, ano) {
+  client.connect();
+  client.db("renewable_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+  console.log(mes + " / " + ano)
+
+  client.db("renewable_db").collection("renewable_db_collection").find({
+    $or: [
+      { 'date.year': { $in: [ano] } },
+      { 'date.month': { $in: [mes] } }]
+  }).toArray(function (err, res) {
+    if (err) {
+      console.log(err);
+      return err;
+    } else {
+      console.log("Read values from Database");
+      console.log(res);
+
+      var media = {}
+      for (var i = 1; i < new Array(32).length; i++) {
+        media[i] = {
+          consumed: 0,
+          produced: 0,
+          items: 0
+        }
+        res.forEach(object => {
+          if (object.date.day == i) {
+            media[i].consumed += parseFloat(object.consumption_current)
+            media[i].produced += parseFloat(object.producing_current)
+            media[i].items++;
+          }
+        })
+      }
+    }
+    console.log(media)
+    response = media
+    return media;
+  })
+  client.db.close;
+}
+//Endpoint that reads data according to date, calculates the mean
+app.get('/values/days/:mes/:ano', (req, res) => {
+  console.log(req.params)
+  try {
+    setTimeout(() => {
+      response = readDataByMonth(req.params.mes, req.params.ano)
+      setTimeout(() => {
+        console.log("What's gonna be sent back to client")
+        console.log(response)
+        res.send(response)
+      }, 500)
+    }, 500)
+  } catch (err) {
+    console.log(err)
+  }
+});
+
+//------------------ LER REGISTOS DE ACORDO COM A ANO  --------------------------------------
+//Function that reads data according to date, calculates the mean
+function readDataByYear(ano) {
+  client.connect();
+  client.db("renewable_db").command({ ping: 1 });
+
+  console.log("Connected successfully to Database");
+  console.log(ano)
+
+  client.db("renewable_db").collection("renewable_db_collection").find({
+    $or: [
+      { 'date.year': { $in: [ano] } }]
+  }).toArray(function (err, res) {
+    if (err) {
+      console.log(err);
+      return err;
+    } else {
+      console.log("Read values from Database");
+      console.log(res);
+
+      var media = {}
+      for (var i = 1; i < new Array(13).length; i++) {
+        media[i] = {
+          consumed: 0,
+          produced: 0
+        }
+      }
+      var index = 1;
+      res.forEach(object => {
+        if (object.date.month < index) {
+          media[index].consumed += parseFloat(object.consumption_current)
+          media[index].produced += parseFloat(object.producing_current)
+        } else {
+          if (media[index].consumed == NaN || media[index].produced == NaN) {
+            media[index].consumed = 0
+            media[index].produced = 0
+          }
+          index++
+        }
+      })
       console.log(media)
       response = media
       return media;
@@ -215,14 +349,11 @@ function readDataByDate(dia, mes, ano) {
   client.db.close;
 }
 //Endpoint that reads data according to date, calculates the mean
-app.get('/values/:dia/:mes/:ano', (req, res) => {
+app.get('/values/months/:ano', (req, res) => {
   console.log(req.params)
   try {
     setTimeout(() => {
-      // If Databse configured
-      response = readDataByDate(req.params.dia, req.params.mes, req.params.ano)
-      // If NO Databse configured
-      //response = { consumed: 0.22, produced: 0.43 }
+      response = readDataByYear(req.params.ano)
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -266,8 +397,8 @@ app.get('/payload/all', (req, res) => {
       // If Databse configured
       response = readValues()
       // If NO Databse configured
-
-      /*response = [
+      /*
+      response = [
         {
           _id: '60b4f7f87bcfb8042ffef239',
           battery_voltage: 13,
@@ -316,8 +447,8 @@ app.get('/payload/all', (req, res) => {
             second: '12'
           }
         }
-      ]*/
-
+      ]
+      */
       setTimeout(() => {
         console.log("What's gonna be sent back to client")
         console.log(response)
@@ -353,10 +484,10 @@ function addEntry(payload) {
 //Endpoint to add an entry to the database
 app.post('/payload', (req, res) => {
   // If Databse configured
-  let body = req.body
+  //let body = req.body
   // If NO Databse configured
 
- /* let body = {
+  let body = {
     battery_voltage: 16,
     solar_panel_voltage: 16,
     consumption_current: 0.26,
@@ -370,7 +501,7 @@ app.post('/payload', (req, res) => {
       minute: '23',
       second: '12'
     }
-  }*/
+  }
 
   console.log(body)
   try {

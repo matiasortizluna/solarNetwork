@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- Page Heading -->
-    <!--<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
       <button type="button" class="btn btn-info" @click="getAllValues">
         Get All Entries
@@ -10,9 +10,15 @@
         Create New Values
       </button>
       <button type="button" class="btn btn-info" @click="getDataByDay">
-        Get Data by Date
+        Get Data by Day
       </button>
-    </div>-->
+      <button type="button" class="btn btn-info" @click="getDataByMonth">
+        Get Data by Month
+      </button>
+      <button type="button" class="btn btn-info" @click="getDataByYear">
+        Get Data by Year
+      </button>
+    </div>
     <!-- Content Row -->
     <div class="row">
       <!-- Pending Requests Card Example -->
@@ -32,9 +38,7 @@
               />
             </div>
             <br />
-            <p class="card-text">
-              {{ values.battery_voltage }} V
-            </p>
+            <p class="card-text">{{ values.battery_voltage }} V</p>
           </div>
           <div class="card-footer text-muted">
             <div>
@@ -66,9 +70,7 @@
               />
             </div>
             <br />
-            <p class="card-text">
-              {{ values.solar_panel_voltage }} V
-            </p>
+            <p class="card-text">{{ values.solar_panel_voltage }} V</p>
           </div>
           <div class="card-footer text-muted">
             <div>
@@ -100,9 +102,7 @@
               />
             </div>
             <br />
-            <p class="card-text">
-              {{ values.consumption_current }} A
-            </p>
+            <p class="card-text">{{ values.consumption_current }} A</p>
           </div>
           <div class="card-footer text-muted">
             <div>
@@ -134,9 +134,7 @@
               />
             </div>
             <br />
-            <p class="card-text">
-              {{ values.producing_current }} A
-            </p>
+            <p class="card-text">{{ values.producing_current }} A</p>
           </div>
           <div class="card-footer text-muted">
             <div>
@@ -169,7 +167,7 @@
       <div class="col-md-9"></div>
     </div>
     <div class="row">
-    <div class="col-sm-2">
+      <div class="col-sm-2">
         <br />
         <br />
         <label class="h3 mr-3 text-gray-800">Year</label>
@@ -180,17 +178,17 @@
             background: transparent;
             padding-left: 10px;
             border: 1px solid black;
-            "
+          "
         >
-            <option v-for="ano in anos" :value="ano" :key="ano">
+          <option v-for="ano in anos" :value="ano" :key="ano">
             {{ ano }}
-            </option>
+          </option>
         </select>
         <div v-show="!anos" class="alert alert-primary" role="alert">
-            Loading...
+          Loading...
         </div>
-    </div>
-    <div class="col-sm-2">
+      </div>
+      <div class="col-sm-2">
         <br />
         <br />
         <div v-show="opcao == 'dia' || opcao == 'mes'">
@@ -211,30 +209,33 @@
                 Select an year
             </div>
         </div>
-    </div>
-    <div class="col-sm-2">
+      </div>
+      <div class="col-sm-2">
         <br />
         <br />
         <div v-show="opcao == 'dia'">
-            <label class="h3 mr-3 text-gray-800">Day</label>
-            <select
-                v-show="dias"
-                v-model="data.dia"
-                style="
-                background: transparent;
-                padding-left: 10px;
-                border: 1px solid black;
-                "
-            >
-                <option v-for="dia in dias" :value="mes" :key="dia">{{ dia }}</option>
-            </select>
-            <div v-show="!dias" class="alert alert-primary" role="alert">
-                Select a month
-            </div>
+          <label class="h3 mr-3 text-gray-800">Day</label>
+          <select
+            v-show="dias"
+            v-model="data.dia"
+            style="
+              background: transparent;
+              padding-left: 10px;
+              border: 1px solid black;
+            "
+          >
+            <option v-for="dia in dias" :value="mes" :key="dia">
+              {{ dia }}
+            </option>
+          </select>
+          <div v-show="!dias" class="alert alert-primary" role="alert">
+            Select a month
+          </div>
         </div>
+      </div>
+      <div class="col-sm-6"></div>
     </div>
     <div class="col-sm-6"></div>
-    </div>
     <div class="row" v-show="opcao == 'dia' && data.dia || opcao == 'mes' && data.mes || opcao == 'ano' && data.ano">
         <div class="col-md-2">
             <button class="btn btn-info" @click="getData()">
@@ -244,10 +245,10 @@
         <div class="col-md-10"></div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-          <LineChart :key="labels.length" :data="dados" :labels="labels" />
-        </div>
+      <div class="col-md-12">
+        <LineChart :key="labels.length" :data="dados" :labels="labels" />
       </div>
+    </div>
   </div>
 </template>
 
@@ -273,81 +274,80 @@ export default {
         produced: null,
       },
       labels: [],
-      labelsDef:{
-          'dia': [
-        "00:00",
-        "01:00",
-        "02:00",
-        "03:00",
-        "04:00",
-        "05:00",
-        "06:00",
-        "07:00",
-        "08:00",
-        "09:00",
-        "10:00",
-        "11:00",
-        "12:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00",
-        "22:00",
-        "23:00",
-            ],
-          'mes': [
-        "01",
-        "02",
-        "03",
-        "04",
-        "05",
-        "06",
-        "07",
-        "08",
-        "09",
-        "10",
-        "11",
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-        20,
-        21,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        28,
-        29,
-        30,
-        31,
-            ],
-          'ano': [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Set",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-
+      labelsDef: {
+        dia: [
+          "00:00",
+          "01:00",
+          "02:00",
+          "03:00",
+          "04:00",
+          "05:00",
+          "06:00",
+          "07:00",
+          "08:00",
+          "09:00",
+          "10:00",
+          "11:00",
+          "12:00",
+          "13:00",
+          "14:00",
+          "15:00",
+          "16:00",
+          "17:00",
+          "18:00",
+          "19:00",
+          "20:00",
+          "21:00",
+          "22:00",
+          "23:00",
+        ],
+        mes: [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "10",
+          "11",
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+        ],
+        ano: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Set",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
       },
       data: {
         dia: null,
@@ -368,6 +368,7 @@ export default {
           //console.log("LAST VALUE");
           console.log(response.data);
           this.values = response.data;
+          this.getAllYears();
         })
         .catch((err) => {
           //console.log(err);
@@ -376,19 +377,19 @@ export default {
     getAllValues: function () {
       axios.get("http://localhost:8080/payload/all").then((response) => {
         ////console.log("ALL ENTRIES");
-        //this.values = response.data;
+        this.values = response.data;
         ////console.log(response);
       });
     },
     getDataByDay: function () {
       axios
         .get(
-          "http://localhost:8080/values/" +
-            this.data.dia +
+          "http://localhost:8080/values/hours/" +
+            "31" +
             "/" +
-            this.data.mes +
+            "05" +
             "/" +
-            this.data.ano
+            "2021"
         )
         .then((response) => {
           ////console.log("DATA BY DATE");
@@ -396,6 +397,33 @@ export default {
           this.dados.consumed = response.data.consumed;
           this.dados.produced = response.data.produced;
           ////console.log(this.dados);
+          console.log("DATA OF DAY [HOURS]");
+          console.log(response);
+          //this.dados.consumed = response.data.consumed;
+          //this.dados.produced = response.data.produced;
+          //console.log(this.dados);
+        });
+    },
+    getDataByMonth: function () {
+      axios
+        .get("http://localhost:8080/values/days/" + "05" + "/" + "2021")
+        .then((response) => {
+          console.log("DATA OF MONTH [DAYS]");
+          console.log(response);
+          //this.dados.consumed = response.data.consumed;
+          //this.dados.produced = response.data.produced;
+          //console.log(this.dados);
+        });
+    },
+    getDataByYear: function () {
+      axios
+        .get("http://localhost:8080/values/months/" + "2021")
+        .then((response) => {
+          console.log("DATA OF YEAR [MONTHS]");
+          console.log(response);
+          //this.dados.consumed = response.data.consumed;
+          //this.dados.produced = response.data.produced;
+          //console.log(this.dados);
         });
     },
     getAllMonthsByYear: function (year) {
@@ -445,45 +473,44 @@ export default {
         ////console.log(response);
       });
     },
-    chartChanged: function(event){
-        this.labels = this.labelsDef[event.target.value]
-        this.dados.consumed = null
-        this.dados.produced = null
-        this.ano = null
-        this.mes = null
-        this.dia = null
+    chartChanged(event) {
+      this.labels = this.labelsDef[event.target.value];
+      this.dados.consumed = null;
+      this.dados.produced = null;
+      this.ano = null;
+      this.mes = null;
+      this.dia = null;
     },
-    dateChanged: function(section){
-        switch(section){
-            case 'mes':
-                this.data.dia = null
-                this.getAllDaysByMonthAndYear(this.data.mes, this.data.ano)
-            break
-            case 'ano':
-                this.data.mes = null
-                this.data.dia = null
-                this.getAllMonthsByYear(this.data.ano)
-        }
+    dateChanged(event, section) {
+      switch (section) {
+        case "mes":
+          this.data.dia = null;
+          this.getAllDaysByMonthAndYear(this.data.mes, this.data.ano);
+          break;
+        case "ano":
+          this.data.mes = null;
+          this.data.dia = null;
+          this.getAllMonthsByYear(this.ano);
+      }
     },
-    getData(){
-        console.log(this.data)
-    }
+    getData() {
+      console.log(this.data);
+    },
   },
   mounted() {
     this.labels = this.labelsDef.dia
     this.getCurrentValues();
-    //this.getAllYears();
   },
 };
 </script>
 
 <style>
-    #app {
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>

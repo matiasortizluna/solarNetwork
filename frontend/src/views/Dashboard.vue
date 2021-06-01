@@ -9,6 +9,9 @@
       <button type="button" class="btn btn-info" @click="getAllMonths">
         Get All Months
       </button>
+      <button type="button" class="btn btn-info" @click="getAllDays">
+        Get All Days
+      </button>
       <button type="button" class="btn btn-info" @click="createValues">
         Create New Values
       </button>
@@ -457,6 +460,14 @@ export default {
           //this.dados.produced = response.data.produced;
           //console.log(this.dados);
         });
+    },
+    getAllDays: function () {
+      axios.get("http://localhost:8080/days/04/2021").then((response) => {
+        console.log("DIAS");
+        console.log(response);
+        //this.meses = response.data;
+        //console.log(this.meses);
+      });
     },
     getAllMonths: function () {
       axios.get("http://localhost:8080/months/2021").then((response) => {

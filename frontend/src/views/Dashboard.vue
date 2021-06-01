@@ -42,11 +42,8 @@
             </div>
             <div>
               <div class="row">
-                <div v-show="values.battery_voltage != 0" class="col">
-                  <button type="button" class="btn btn-success">Connected</button>
-                </div>
-                <div v-show="values.battery_voltage == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disconnected</button>
+                <div class="col">
+                  <button type="button" :class="values.battery_voltage ? 'btn btn-success': 'btn btn-danger'">{{ values.battery_voltage ? 'Connected': 'Disconnected' }}</button>
                 </div>
               </div>
             </div>
@@ -79,11 +76,8 @@
             </div>
             <div>
               <div class="row">
-                <div v-show="values.solar_panel_voltage != 0" class="col">
-                  <button type="button" class="btn btn-success">Connected</button>
-                </div>
-                <div v-show="values.solar_panel_voltage == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disconnected</button>
+                <div class="col">
+                  <button type="button" :class="values.solar_panel_voltage ? 'btn btn-success': 'btn btn-danger'">{{ values.solar_panel_voltage ? 'Connected' : 'Disconnected' }}</button>
                 </div>
               </div>
             </div>
@@ -116,11 +110,8 @@
             </div>
             <div>
               <div class="row">
-                <div v-show="values.consumption_current != 0" class="col">
-                  <button type="button" class="btn btn-success">Consuming</button>
-                </div>
-                <div v-show="values.consumption_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">Not consuming</button>
+                <div  class="col">
+                  <button type="button" :class="values.consumption_current ? 'btn btn-success': 'btn btn-danger'">{{ values.consumption_current ? 'Consuming' : 'Not consuming'}}</button>
                 </div>
               </div>
             </div>
@@ -153,11 +144,8 @@
             </div>
             <div>
               <div class="row">
-                <div v-show="values.producing_current != 0" class="col">
-                  <button type="button" class="btn btn-success">Producing</button>
-                </div>
-                <div v-show="values.producing_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">Not producing</button>
+                <div class="col">
+                  <button type="button" :class="values.producing_current ? 'btn btn-success': 'btn btn-danger'">{{ values.producing_current ? 'Producing' : 'Not producing'}}</button>
                 </div>
               </div>
             </div>
@@ -187,7 +175,7 @@
         <label class="h3 mr-3 text-gray-800">Year</label>
         <select v-show="anos"
             v-model="data.ano"
-            @change="dateChanged($event, ano)"
+            @change="dateChanged('ano')"
             style="
             background: transparent;
             padding-left: 10px;
@@ -210,7 +198,7 @@
             <select
                 v-show="meses"
                 v-model="data.mes"
-                @change="dateChanged($event, mes)"
+                @change="dateChanged('mes')"
                 style="
                 background: transparent;
                 padding-left: 10px;
@@ -249,7 +237,7 @@
     </div>
     <div class="row" v-show="opcao == 'dia' && data.dia || opcao == 'mes' && data.mes || opcao == 'ano' && data.ano">
         <div class="col-md-2">
-            <button class="btn btn-info" @click="getData">
+            <button class="btn btn-info" @click="getData()">
                 Get data
             </button>
         </div>
@@ -373,12 +361,12 @@ export default {
     };
   },
   methods: {
-    getValues: function () {
+    getCurrentValues: function () {
       axios
         .get("http://localhost:8080/payload")
         .then((response) => {
           //console.log("LAST VALUE");
-          //console.log(response);
+          console.log(response.data);
           this.values = response.data;
         })
         .catch((err) => {
@@ -387,9 +375,9 @@ export default {
     },
     getAllValues: function () {
       axios.get("http://localhost:8080/payload/all").then((response) => {
-        //console.log("ALL ENTRIES");
+        ////console.log("ALL ENTRIES");
         //this.values = response.data;
-        //console.log(response);
+        ////console.log(response);
       });
     },
     getDataByDay: function () {
@@ -403,27 +391,35 @@ export default {
             this.data.ano
         )
         .then((response) => {
-          //console.log("DATA BY DATE");
-          //console.log(response);
+          ////console.log("DATA BY DATE");
+          ////console.log(response);
           this.dados.consumed = response.data.consumed;
           this.dados.produced = response.data.produced;
-          //console.log(this.dados);
+          ////console.log(this.dados);
         });
     },
-    getAllMonths: function () {
-      axios.get("http://localhost:8080/months").then((response) => {
-        //console.log("MESES");
-        //console.log(response);
+    getAllMonthsByYear: function (year) {
+      axios.get("http://localhost:8080/months/"+year).then((response) => {
+        ////console.log("MESES");
+        ////console.log(response);
         this.meses = response.data;
-        //console.log(this.meses);
+        ////console.log(this.meses);
+      });
+    },
+    getAllDaysByMonthAndYear: function(month, year){
+        axios.get("http://localhost:8080/days/"+month+"/"+year).then((response) => {
+        ////console.log("MESES");
+        ////console.log(response);
+        this.dias = response.data;
+        ////console.log(this.meses);
       });
     },
     getAllYears: function () {
       axios.get("http://localhost:8080/years").then((response) => {
-        //console.log("ANOS");
-        //console.log(response);
+        ////console.log("ANOS");
+        ////console.log(response);
         this.anos = response.data;
-        //console.log(this.anos);
+        ////console.log(this.anos);
       });
     },
     createValues: function () {
@@ -445,11 +441,11 @@ export default {
         },
       };
       axios.post("http://localhost:8080/payload", body).then((response) => {
-        //console.log("NEW ENTRY");
-        //console.log(response);
+        ////console.log("NEW ENTRY");
+        ////console.log(response);
       });
     },
-    chartChanged(event){
+    chartChanged: function(event){
         this.labels = this.labelsDef[event.target.value]
         this.dados.consumed = null
         this.dados.produced = null
@@ -457,7 +453,7 @@ export default {
         this.mes = null
         this.dia = null
     },
-    dateChanged(event, section){
+    dateChanged: function(section){
         switch(section){
             case 'mes':
                 this.data.dia = null
@@ -466,7 +462,7 @@ export default {
             case 'ano':
                 this.data.mes = null
                 this.data.dia = null
-                this.getAllMonthsByYear(this.ano)
+                this.getAllMonthsByYear(this.data.ano)
         }
     },
     getData(){
@@ -475,8 +471,8 @@ export default {
   },
   mounted() {
     this.labels = this.labelsDef.dia
-    this.getValues();
-    this.getAllYears();
+    this.getCurrentValues();
+    //this.getAllYears();
   },
 };
 </script>

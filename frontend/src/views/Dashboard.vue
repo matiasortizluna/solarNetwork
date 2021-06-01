@@ -202,7 +202,7 @@
         <select
           v-show="anos"
           v-model="data.ano"
-          @change="dateChanged($event, ano)"
+          @change="dateChanged('ano')"
           style="
             background: transparent;
             padding-left: 10px;
@@ -225,7 +225,7 @@
           <select
             v-show="meses"
             v-model="data.mes"
-            @change="dateChanged($event, mes)"
+            @change="dateChanged('mes')"
             style="
               background: transparent;
               padding-left: 10px;
@@ -281,7 +281,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <LineChart :key="labels.length" :data="dados" :labels="labels" />
+        <LineChart :key="dateString" :data="dados" :labels="labels" />
       </div>
     </div>
   </div>
@@ -305,8 +305,8 @@ export default {
     return {
       values: {},
       dados: {
-        consumed: null,
-        produced: null,
+        consumed: [],
+        produced: [],
       },
       labels: [],
       labelsDef: {
@@ -393,6 +393,7 @@ export default {
       dias: null,
       meses: null,
       anos: null,
+        dateString: null
     };
   },
   methods: {
@@ -403,6 +404,8 @@ export default {
           //console.log("LAST VALUE");
           //console.log(response);
           this.values = response.data;
+            this.getAllYears();
+
         })
         .catch((err) => {
           //console.log(err);
@@ -455,14 +458,24 @@ export default {
           //console.log(this.dados);
         });
     },
-    getAllMonths: function () {
-      axios.get("http://localhost:8080/months").then((response) => {
-        //console.log("MESES");
+      getAllDaysByMonthAndYear: function (month, year) {
+        console.log("Entrou")
+      axios.get("http://localhost:8080/days/" + month +"/" +year).then((response) => {
+        console.log("MESES");
         //console.log(response);
-        this.meses = response.data;
+        this.dias = response.data;
         //console.log(this.meses);
       });
     },
+      getAllMonthsByYear: function(year){
+          console.log("Entrou 1 ")
+          axios.get("http://localhost:8080/months/" +year).then((response) => {
+              console.log("Ano");
+              //console.log(response);
+              this.meses = response.data;
+              //console.log(this.meses);
+          });
+      },
     getAllYears: function () {
       axios.get("http://localhost:8080/years").then((response) => {
         //console.log("ANOS");
@@ -496,13 +509,13 @@ export default {
     },
     chartChanged(event) {
       this.labels = this.labelsDef[event.target.value];
-      this.dados.consumed = null;
-      this.dados.produced = null;
+      this.dados.consumed = [];
+      this.dados.produced = [];
       this.ano = null;
       this.mes = null;
       this.dia = null;
     },
-    dateChanged(event, section) {
+    dateChanged(section) {
       switch (section) {
         case "mes":
           this.data.dia = null;
@@ -511,17 +524,39 @@ export default {
         case "ano":
           this.data.mes = null;
           this.data.dia = null;
-          this.getAllMonthsByYear(this.ano);
+          this.getAllMonthsByYear(this.data.ano);
       }
     },
     getData() {
-      console.log(this.data);
+        let url;
+        if(!this.data.dia && this.data.mes){
+            url = "http://localhost:8080/values/days/" + this.data.mes + "/" + this.data.ano;
+        }else if(!this.data.mes){
+            url = "http://localhost:8080/values/months/" + this.data.ano;
+        }else{
+            url = "http://localhost:8080/values/hours/" + this.data.dia + "/" + this.data.mes + "/" + this.data.ano;
+        }
+
+        axios
+            .get(url)
+            .then((response) => {
+                console.log(response.data);
+
+                response.data.forEach(
+                    (item)=>{
+                        this.dados.consumed.push(item.consumed);
+                        this.dados.produced.push(item.produced);
+                    }
+                )
+
+                this.dateString = this.data.dia+""+this.data.mes+""+this.data.ano;
+            });
+
     },
   },
   mounted() {
     this.labels = this.labelsDef.dia;
     this.getValues();
-    this.getAllYears();
   },
 };
 </script>

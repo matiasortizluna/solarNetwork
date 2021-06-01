@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.listen(port, () => //console.log(`Hello world app listening on port ${port}!`));
 
 //const importedFunctions = require('./functions.js')
 
@@ -41,15 +41,15 @@ function readLast() {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
+  //console.log("Connected successfully to Database");
 
   client.db("renewable_db").collection("renewable_db_collection").find({}).toArray(function (err, res) {
     if (err) {
-      console.log(err);
+      //console.log(err);
       return err;
     } else {
-      console.log("Read values from Database");
-      console.log(res);
+      //console.log("Read values from Database");
+      //console.log(res);
       response = res[res.length - 1]
       return res;
     }
@@ -81,13 +81,13 @@ app.get('/payload', (req, res) => {
         }
       }*/
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -97,14 +97,14 @@ function readMonths(ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
-  console.log(ano)
+  //console.log("Connected successfully to Database");
+  //console.log(ano)
   client.db("renewable_db").collection("renewable_db_collection").distinct('date.month', { 'date.year': ano }).then((res) => {
-    console.log(res)
+    //console.log(res)
     response = res
     return res
   }).catch((err) => {
-    console.log(err)
+    //console.log(err)
     return err
   })
 
@@ -121,14 +121,14 @@ app.get('/months/:year', (req, res) => {
       //response = ['05', '06', '11']
 
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
 
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -138,14 +138,14 @@ function readDays(mes, ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
-  console.log(ano)
+  //console.log("Connected successfully to Database");
+  //console.log(ano)
   client.db("renewable_db").collection("renewable_db_collection").distinct('date.day', { 'date.year': ano, 'date.month': mes }).then((res) => {
-    console.log(res)
+    //console.log(res)
     response = res
     return res
   }).catch((err) => {
-    console.log(err)
+    //console.log(err)
     return err
   })
 
@@ -162,14 +162,14 @@ app.get('/days/:month/:year', (req, res) => {
       //response = ['05', '06', '11']
 
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
 
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -179,14 +179,14 @@ function readYears() {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
+  //console.log("Connected successfully to Database");
 
   let result = client.db("renewable_db").collection("renewable_db_collection").distinct('date.year').then((res) => {
-    console.log(res)
+    //console.log(res)
     response = res
     return res
   }).catch((err) => {
-    console.log(err)
+    //console.log(err)
     return err
   })
 
@@ -203,14 +203,14 @@ app.get('/years', (req, res) => {
       //response = ['2021', '2020', '2019']
 
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
 
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -222,8 +222,8 @@ function readDataByDay(dia, mes, ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
-  console.log(dia + " / " + mes + " / " + ano)
+  //console.log("Connected successfully to Database");
+  //console.log(dia + " / " + mes + " / " + ano)
 
   client.db("renewable_db").collection("renewable_db_collection").find({
     $and: [
@@ -232,11 +232,11 @@ function readDataByDay(dia, mes, ano) {
       { 'date.day': { $in: [dia] } }]
   }).toArray(function (err, res) {
     if (err) {
-      console.log(err);
+      //console.log(err);
       return err;
     } else {
-      console.log("Read values from Database");
-      console.log(res);
+      //console.log("Read values from Database");
+      //console.log(res);
 
       var media_arr = []
       var media = {}
@@ -262,7 +262,7 @@ function readDataByDay(dia, mes, ano) {
         media_arr.push(media[i])
       }
     }
-    console.log(media_arr)
+    //console.log(media_arr)
     response = media_arr
     return media_arr;
   })
@@ -270,18 +270,18 @@ function readDataByDay(dia, mes, ano) {
 }
 //Endpoint that reads data according to date, calculates the mean
 app.get('/values/hours/:dia/:mes/:ano', (req, res) => {
-  console.log(req.params)
+  //console.log(req.params)
   try {
     setTimeout(() => {
       response = readDataByDay(req.params.dia, req.params.mes, req.params.ano)
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -292,8 +292,8 @@ function readDataByMonth(mes, ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
-  console.log(mes + " / " + ano)
+  //console.log("Connected successfully to Database");
+  //console.log(mes + " / " + ano)
 
   client.db("renewable_db").collection("renewable_db_collection").find({
     $and: [
@@ -301,11 +301,11 @@ function readDataByMonth(mes, ano) {
       { 'date.month': { $in: [mes] } }]
   }).toArray(function (err, res) {
     if (err) {
-      console.log(err);
+      //console.log(err);
       return err;
     } else {
-      console.log("Read values from Database");
-      console.log(res);
+      //console.log("Read values from Database");
+      //console.log(res);
 
       var media_arr = []
       var media = {}
@@ -331,7 +331,7 @@ function readDataByMonth(mes, ano) {
         media_arr.push(media[i])
       }
     }
-    console.log(media_arr)
+    //console.log(media_arr)
     response = media_arr
     return media_arr;
   })
@@ -339,18 +339,18 @@ function readDataByMonth(mes, ano) {
 }
 //Endpoint that reads data according to date, calculates the mean
 app.get('/values/days/:mes/:ano', (req, res) => {
-  console.log(req.params)
+  //console.log(req.params)
   try {
     setTimeout(() => {
       response = readDataByMonth(req.params.mes, req.params.ano)
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -361,19 +361,19 @@ function readDataByYear(ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
-  console.log(ano)
+  //console.log("Connected successfully to Database");
+  //console.log(ano)
 
   client.db("renewable_db").collection("renewable_db_collection").find({
     $or: [
       { 'date.year': { $in: [ano] } }]
   }).toArray(function (err, res) {
     if (err) {
-      console.log(err);
+      //console.log(err);
       return err;
     } else {
-      console.log("Read values from Database");
-      console.log(res);
+      //console.log("Read values from Database");
+      //console.log(res);
 
       var media_arr = []
       var media = {}
@@ -399,7 +399,7 @@ function readDataByYear(ano) {
         media_arr.push(media[i])
       }
     }
-    console.log(media_arr)
+    //console.log(media_arr)
     response = media_arr
     return media_arr;
   })
@@ -407,18 +407,18 @@ function readDataByYear(ano) {
 }
 //Endpoint that reads data according to date, calculates the mean
 app.get('/values/months/:ano', (req, res) => {
-  console.log(req.params)
+  //console.log(req.params)
   try {
     setTimeout(() => {
       response = readDataByYear(req.params.ano)
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -431,15 +431,15 @@ function readValues() {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
+  //console.log("Connected successfully to Database");
 
   client.db("renewable_db").collection("renewable_db_collection").find({}).toArray(function (err, res) {
     if (err) {
-      console.log(err)
+      //console.log(err)
       return err
     } else {
-      console.log("Read values from Database")
-      console.log(res)
+      //console.log("Read values from Database")
+      //console.log(res)
       response = res
       return res
     }
@@ -507,14 +507,14 @@ app.get('/payload/all', (req, res) => {
       ]
       */
       setTimeout(() => {
-        console.log("What's gonna be sent back to client")
-        console.log(response)
+        //console.log("What's gonna be sent back to client")
+        //console.log(response)
         res.send(response)
       }, 500)
     }, 500)
 
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 });
 
@@ -524,14 +524,14 @@ function addEntry(payload) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
-  console.log("Connected successfully to Database");
+  //console.log("Connected successfully to Database");
 
   client.db("renewable_db").collection("renewable_db_collection").insertOne(payload, function (err, res) {
     if (err) {
-      console.log(err)
+      //console.log(err)
       return err
     } else {
-      console.log(res)
+      //console.log(res)
       return res
     }
   })
@@ -560,12 +560,12 @@ app.post('/payload', (req, res) => {
   //   }
   // }
 
-  console.log(body)
+  //console.log(body)
   try {
     response = addEntry(body)
     res.send(response)
   } catch (err) {
-    console.log(err)
+    //console.log(err)
   }
 })
 
@@ -574,9 +574,9 @@ app.post('/payload', (req, res) => {
 function createCollection() {
   client.db("renewable_db").createCollection("renewable_db_collection", (err, res) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     } else {
-      console.log(res)
+      //console.log(res)
     }
   })
 }

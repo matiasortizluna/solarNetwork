@@ -6,6 +6,9 @@
       <button type="button" class="btn btn-info" @click="getAllValues">
         Get All Entries
       </button>
+      <button type="button" class="btn btn-info" @click="getAllMonths">
+        Get All Months
+      </button>
       <button type="button" class="btn btn-info" @click="createValues">
         Create New Values
       </button>
@@ -456,10 +459,10 @@ export default {
         });
     },
     getAllMonths: function () {
-      axios.get("http://localhost:8080/months").then((response) => {
-        //console.log("MESES");
-        //console.log(response);
-        this.meses = response.data;
+      axios.get("http://localhost:8080/months/2021").then((response) => {
+        console.log("MESES");
+        console.log(response);
+        //this.meses = response.data;
         //console.log(this.meses);
       });
     },

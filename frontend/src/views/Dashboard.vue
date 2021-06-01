@@ -95,7 +95,6 @@
                     Disconnected
                   </button>
                 </div>
-              </div>
             </div>
           </div>
         </div>
@@ -173,9 +172,7 @@
                     Not producing
                   </button>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <!--<div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
       <button type="button" class="btn btn-info" @click="getAllValues">
         Get All Entries
@@ -12,7 +12,7 @@
       <button type="button" class="btn btn-info" @click="getDataByDay">
         Get Data by Date
       </button>
-    </div>
+    </div>-->
     <!-- Content Row -->
     <div class="row">
       <!-- Pending Requests Card Example -->
@@ -169,7 +169,7 @@
       <div class="col-md-3" style="padding-right: 5%">
         <br />
         <br />
-        <label class="h3 mr-3 text-gray-800">Show statics</label>
+        <label class="h3 mr-3 text-gray-800">Show statistics</label>
 
         <select v-model="opcao" @change="chartChanged($event)">
           <option disabled value=" ">Select a option</option>
@@ -180,87 +180,80 @@
       </div>
       <div class="col-md-9"></div>
     </div>
-    <div v-if="opcao == 'dia'">
-      <div class="row">
-        <div class="col-md-2">
-          <br />
-          <br />
-          <label class="h3 mr-3 text-gray-800">Date</label>
-          <input
-            v-model="data.dia"
-            id="date"
-            type="date"
-            min="1899-01-01"
-            max="2030-12-12"
-            v-on:change="getDataByDay"
-          />
-
-          <div class="col-md-5"></div>
-        </div>
-        <div class="col-md-10"></div>
-      </div>
-    </div>
-    <div v-if="opcao == 'mes'">
-      <div class="row">
-        <div class="col-md-1">
-          <br />
-          <br />
-          <label class="h3 mr-3 text-gray-800">Month</label>
-          <select
-            v-model="data.mes"
-            style="
-              background: transparent;
-              padding-left: 10px;
-              border: 1px solid black;
-            "
-          >
-            <option value="" disabled selected>Month</option>
-            <option v-for="mes in meses" :value="mes" :key="mes">{{ mes }}</option>
-          </select>
-        </div>
-        <div class="col-md-1">
-          <br />
-          <br />
-          <label class="h3 mr-3 text-gray-800">Year</label>
-          <select
+    <div class="row">
+    <div class="col-sm-2">
+        <br />
+        <br />
+        <label class="h3 mr-3 text-gray-800">Year</label>
+        <select v-show="anos"
             v-model="data.ano"
+            @change="dateChanged($event, ano)"
             style="
-              background: transparent;
-              padding-left: 10px;
-              border: 1px solid black;
+            background: transparent;
+            padding-left: 10px;
+            border: 1px solid black;
             "
-          >
-            <option value="" disabled selected>Year</option>
+        >
             <option v-for="ano in anos" :value="ano" :key="ano">
-              {{ ano }}
+            {{ ano }}
             </option>
-          </select>
+        </select>
+        <div v-show="!anos" class="alert alert-primary" role="alert">
+            Loading...
         </div>
-        <div class="col-md-10"></div>
-      </div>
     </div>
-    <div v-if="opcao == 'ano'">
-      <div class="row">
+    <div class="col-sm-2">
+        <br />
+        <br />
+        <div v-show="opcao == 'dia' || opcao == 'mes'">
+            <label class="h3 mr-3 text-gray-800" >Month</label>
+            <select
+                v-show="meses"
+                v-model="data.mes"
+                @change="dateChanged($event, mes)"
+                style="
+                background: transparent;
+                padding-left: 10px;
+                border: 1px solid black;
+                "
+            >
+                <option v-for="mes in meses" :value="mes" :key="mes">{{ mes }}</option>
+            </select>
+            <div v-show="!meses" class="alert alert-primary" role="alert">
+                Select an year
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <br />
+        <br />
+        <div v-show="opcao == 'dia'">
+            <label class="h3 mr-3 text-gray-800">Day</label>
+            <select
+                v-show="dias"
+                v-model="data.dia"
+                style="
+                background: transparent;
+                padding-left: 10px;
+                border: 1px solid black;
+                "
+            >
+                <option v-for="dia in dias" :value="mes" :key="dia">{{ dia }}</option>
+            </select>
+            <div v-show="!dias" class="alert alert-primary" role="alert">
+                Select a month
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6"></div>
+    </div>
+    <div class="row" v-show="opcao == 'dia' && data.dia || opcao == 'mes' && data.mes || opcao == 'ano' && data.ano">
         <div class="col-md-2">
-          <br />
-          <br />
-          <label class="h3 mr-3 text-gray-800">Year</label>
-          <select
-            v-model="data.ano"
-            style="
-              background: transparent;
-              padding-left: 10px;
-              border: 1px solid black;
-            "
-          >
-            <option value="" disabled selected>Year</option>
-            <option v-for="ano in anos" :value="ano" :key="ano">
-              {{ ano }}
-            </option>
-          </select>
+            <button class="btn btn-info" @click="getData">
+                Get data
+            </button>
         </div>
         <div class="col-md-10"></div>
-      </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -288,8 +281,8 @@ export default {
     return {
       values: {},
       dados: {
-        consumed: [],
-        produced: [],
+        consumed: null,
+        produced: null,
       },
       labels: [],
       labelsDef:{
@@ -369,13 +362,14 @@ export default {
 
       },
       data: {
-        dia: "31",
-        mes: "05",
-        ano: "2021",
+        dia: null,
+        mes: null,
+        ano: null,
       },
       opcao: "dia",
-      meses: [],
-      anos: [],
+      dias: null,
+      meses: null,
+      anos: null,
     };
   },
   methods: {
@@ -383,19 +377,19 @@ export default {
       axios
         .get("http://localhost:8080/payload")
         .then((response) => {
-          console.log("LAST VALUE");
-          console.log(response);
+          //console.log("LAST VALUE");
+          //console.log(response);
           this.values = response.data;
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         });
     },
     getAllValues: function () {
       axios.get("http://localhost:8080/payload/all").then((response) => {
-        console.log("ALL ENTRIES");
+        //console.log("ALL ENTRIES");
         //this.values = response.data;
-        console.log(response);
+        //console.log(response);
       });
     },
     getDataByDay: function () {
@@ -409,27 +403,27 @@ export default {
             this.data.ano
         )
         .then((response) => {
-          console.log("DATA BY DATE");
-          console.log(response);
+          //console.log("DATA BY DATE");
+          //console.log(response);
           this.dados.consumed = response.data.consumed;
           this.dados.produced = response.data.produced;
-          console.log(this.dados);
+          //console.log(this.dados);
         });
     },
     getAllMonths: function () {
       axios.get("http://localhost:8080/months").then((response) => {
-        console.log("MESES");
-        console.log(response);
+        //console.log("MESES");
+        //console.log(response);
         this.meses = response.data;
-        console.log(this.meses);
+        //console.log(this.meses);
       });
     },
     getAllYears: function () {
       axios.get("http://localhost:8080/years").then((response) => {
-        console.log("ANOS");
-        console.log(response);
+        //console.log("ANOS");
+        //console.log(response);
         this.anos = response.data;
-        console.log(this.anos);
+        //console.log(this.anos);
       });
     },
     createValues: function () {
@@ -451,24 +445,38 @@ export default {
         },
       };
       axios.post("http://localhost:8080/payload", body).then((response) => {
-        console.log("NEW ENTRY");
-        console.log(response);
+        //console.log("NEW ENTRY");
+        //console.log(response);
       });
     },
     chartChanged(event){
         this.labels = this.labelsDef[event.target.value]
+        this.dados.consumed = null
+        this.dados.produced = null
+        this.ano = null
+        this.mes = null
+        this.dia = null
+    },
+    dateChanged(event, section){
+        switch(section){
+            case 'mes':
+                this.data.dia = null
+                this.getAllDaysByMonthAndYear(this.data.mes, this.data.ano)
+            break
+            case 'ano':
+                this.data.mes = null
+                this.data.dia = null
+                this.getAllMonthsByYear(this.ano)
+        }
+    },
+    getData(){
+        console.log(this.data)
     }
   },
   mounted() {
     this.labels = this.labelsDef.dia
     this.getValues();
-    
-    setTimeout(() => {
-      this.getAllMonths();
-      setTimeout(() => {
-        this.getAllYears();
-      }, 1000);
-    }, 1000);
+    this.getAllYears();
   },
 };
 </script>

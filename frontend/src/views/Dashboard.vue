@@ -6,6 +6,9 @@
       <button type="button" class="btn btn-info" @click="getAllValues">
         Get All Entries
       </button>
+      <button type="button" class="btn btn-info" @click="getAllMonths">
+        Get All Months
+      </button>
       <button type="button" class="btn btn-info" @click="createValues">
         Create New Values
       </button>
@@ -464,7 +467,6 @@ export default {
         console.log("MESES");
         //console.log(response);
         this.dias = response.data;
-        //console.log(this.meses);
       });
     },
       getAllMonthsByYear: function(year){

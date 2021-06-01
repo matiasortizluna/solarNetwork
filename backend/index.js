@@ -93,13 +93,13 @@ app.get('/payload', (req, res) => {
 
 //------------------ LER OS MESES DOS REGISTOS DA BD  --------------------------------------
 //Function that reads all the months existing in the data from the database
-function readMonths() {
+function readMonths(ano) {
   client.connect();
   client.db("renewable_db").command({ ping: 1 });
 
   console.log("Connected successfully to Database");
-
-  let result = client.db("renewable_db").collection("renewable_db_collection").distinct('date.month').then((res) => {
+  console.log(ano)
+  client.db("renewable_db").collection("renewable_db_collection").distinct('date.month', { 'date.year': ano }).then((res) => {
     console.log(res)
     response = res
     return res
@@ -111,11 +111,11 @@ function readMonths() {
   client.db.close;
 }
 //Endpoint to read all the months existing in the data from the database
-app.get('/months', (req, res) => {
+app.get('/months/:year', (req, res) => {
   try {
     setTimeout(() => {
       // If Databse configured
-      response = readMonths()
+      response = readMonths(req.params.year)
       // If NO Databse configured
 
       //response = ['05', '06', '11']

@@ -33,7 +33,7 @@
             </div>
             <br />
             <p class="card-text">
-              {{ values.battery_voltage }}
+              {{ values.battery_voltage }} V
             </p>
           </div>
           <div class="card-footer text-muted">
@@ -43,10 +43,10 @@
             <div>
               <div class="row">
                 <div v-show="values.battery_voltage != 0" class="col">
-                  <button type="button" class="btn btn-success">Active</button>
+                  <button type="button" class="btn btn-success">Connected</button>
                 </div>
                 <div v-show="values.battery_voltage == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disabled</button>
+                  <button type="button" class="btn btn-danger">Disconnected</button>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@
             </div>
             <br />
             <p class="card-text">
-              {{ values.solar_panel_voltage }}
+              {{ values.solar_panel_voltage }} V
             </p>
           </div>
           <div class="card-footer text-muted">
@@ -80,10 +80,10 @@
             <div>
               <div class="row">
                 <div v-show="values.solar_panel_voltage != 0" class="col">
-                  <button type="button" class="btn btn-success">Active</button>
+                  <button type="button" class="btn btn-success">Connected</button>
                 </div>
                 <div v-show="values.solar_panel_voltage == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disabled</button>
+                  <button type="button" class="btn btn-danger">Disconnected</button>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@
             </div>
             <br />
             <p class="card-text">
-              {{ values.consumption_current }}
+              {{ values.consumption_current }} A
             </p>
           </div>
           <div class="card-footer text-muted">
@@ -117,10 +117,10 @@
             <div>
               <div class="row">
                 <div v-show="values.consumption_current != 0" class="col">
-                  <button type="button" class="btn btn-success">Active</button>
+                  <button type="button" class="btn btn-success">Consuming</button>
                 </div>
                 <div v-show="values.consumption_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disabled</button>
+                  <button type="button" class="btn btn-danger">Not consuming</button>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@
             </div>
             <br />
             <p class="card-text">
-              {{ values.producing_current }}
+              {{ values.producing_current }} A
             </p>
           </div>
           <div class="card-footer text-muted">
@@ -154,10 +154,10 @@
             <div>
               <div class="row">
                 <div v-show="values.producing_current != 0" class="col">
-                  <button type="button" class="btn btn-success">Active</button>
+                  <button type="button" class="btn btn-success">Producing</button>
                 </div>
                 <div v-show="values.producing_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">Disabled</button>
+                  <button type="button" class="btn btn-danger">Not producing</button>
                 </div>
               </div>
             </div>
@@ -202,7 +202,7 @@
     </div>
     <div v-if="opcao == 'mes'">
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-1">
           <br />
           <br />
           <label class="h3 mr-3 text-gray-800">Month</label>
@@ -216,6 +216,24 @@
           >
             <option value="" disabled selected>Month</option>
             <option v-for="mes in meses" :value="mes" :key="mes">{{ mes }}</option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <br />
+          <br />
+          <label class="h3 mr-3 text-gray-800">Year</label>
+          <select
+            v-model="data.ano"
+            style="
+              background: transparent;
+              padding-left: 10px;
+              border: 1px solid black;
+            "
+          >
+            <option value="" disabled selected>Year</option>
+            <option v-for="ano in anos" :value="ano" :key="ano">
+              {{ ano }}
+            </option>
           </select>
         </div>
         <div class="col-md-10"></div>
@@ -246,7 +264,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-          <LineChart :key="dados.consumed" :data="dados" :labels="labels" />
+          <LineChart :key="labels.length" :data="dados" :labels="labels" />
         </div>
       </div>
   </div>

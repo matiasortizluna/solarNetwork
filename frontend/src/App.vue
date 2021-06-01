@@ -5,11 +5,10 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <img
-              src="/docs/5.0/assets/brand/bootstrap-logo.svg"
+              src="/logo_white.png"
               alt=""
               width="30"
-              height="24"
-              class="d-inline-block align-text-top"
+              class="d-inline-block align-text-top mr-3"
             />
               ManRenewables Platform
           </a>

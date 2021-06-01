@@ -197,12 +197,13 @@ function readDataByDay(dia, mes, ano) {
       console.log("Read values from Database");
       console.log(res);
 
+      var media_arr = []
       var media = {}
-      for (var i = 1; i < new Array(25).length; i++) {
+      for (var i = 1; i < 25; i++) {
         media[i] = {
-          consumed: 0,
-          produced: 0,
-          items: 0
+          consumed: 0.0,
+          produced: 0.0,
+          items: 0.0
         }
         res.forEach(object => {
           if (object.date.hour == i) {
@@ -212,10 +213,17 @@ function readDataByDay(dia, mes, ano) {
           }
         })
       }
+      for (var i = 1; i < 25; i++) {
+        if (media[i].consumed != 0.0 && media[i].produced != 0.0) {
+          media[i].consumed = media[i].consumed / media[i].items
+          media[i].produced = media[i].produced / media[i].items
+        }
+        media_arr.push(media[i])
+      }
     }
-    console.log(media)
-    response = media
-    return media;
+    console.log(media_arr)
+    response = media_arr
+    return media_arr;
   })
   client.db.close;
 }
@@ -258,8 +266,9 @@ function readDataByMonth(mes, ano) {
       console.log("Read values from Database");
       console.log(res);
 
+      var media_arr = []
       var media = {}
-      for (var i = 1; i < new Array(32).length; i++) {
+      for (var i = 1; i < 32; i++) {
         media[i] = {
           consumed: 0,
           produced: 0,
@@ -273,10 +282,17 @@ function readDataByMonth(mes, ano) {
           }
         })
       }
+      for (var i = 1; i < 32; i++) {
+        if (media[i].consumed != 0.0 && media[i].produced != 0.0) {
+          media[i].consumed = media[i].consumed / media[i].items
+          media[i].produced = media[i].produced / media[i].items
+        }
+        media_arr.push(media[i])
+      }
     }
-    console.log(media)
-    response = media
-    return media;
+    console.log(media_arr)
+    response = media_arr
+    return media_arr;
   })
   client.db.close;
 }
@@ -318,8 +334,9 @@ function readDataByYear(ano) {
       console.log("Read values from Database");
       console.log(res);
 
+      var media_arr = []
       var media = {}
-      for (var i = 1; i < new Array(13).length; i++) {
+      for (var i = 1; i < 13; i++) {
         media[i] = {
           consumed: 0,
           produced: 0,
@@ -333,10 +350,17 @@ function readDataByYear(ano) {
           }
         })
       }
+      for (var i = 1; i < 13; i++) {
+        if (media[i].consumed != 0.0 && media[i].produced != 0.0) {
+          media[i].consumed = media[i].consumed / media[i].items
+          media[i].produced = media[i].produced / media[i].items
+        }
+        media_arr.push(media[i])
+      }
     }
-    console.log(media)
-    response = media
-    return media;
+    console.log(media_arr)
+    response = media_arr
+    return media_arr;
   })
   client.db.close;
 }

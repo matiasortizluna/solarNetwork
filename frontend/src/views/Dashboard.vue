@@ -95,190 +95,193 @@
                     Disconnected
                   </button>
                 </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 20rem">
-          <div class="card-header">
-            <strong>Consumption Current</strong>
-          </div>
-          <div class="card-body">
-            <div>
-              <img
-                src="/currentconsumption.png"
-                alt="Consumption Current"
-                class="rounded-circle"
-                height="200px"
-                widht="180px"
-              />
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Consumption Current</strong>
             </div>
-            <br />
-            <p class="card-text">{{ values.consumption_current }} A</p>
-          </div>
-          <div class="card-footer text-muted">
-            <div>
-              <p>State</p>
+            <div class="card-body">
+              <div>
+                <img
+                  src="/currentconsumption.png"
+                  alt="Consumption Current"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
+              </div>
+              <br />
+              <p class="card-text">{{ values.consumption_current }} A</p>
             </div>
-            <div>
-              <div class="row">
-                <div v-show="values.consumption_current != 0" class="col">
-                  <button type="button" class="btn btn-success">
-                    Consuming
-                  </button>
-                </div>
-                <div v-show="values.consumption_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">
-                    Not consuming
-                  </button>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.consumption_current != 0" class="col">
+                    <button type="button" class="btn btn-success">
+                      Consuming
+                    </button>
+                  </div>
+                  <div v-show="values.consumption_current == 0" class="col">
+                    <button type="button" class="btn btn-danger">
+                      Not consuming
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 20rem">
-          <div class="card-header">
-            <strong>Produciong Current</strong>
-          </div>
-          <div class="card-body">
-            <div>
-              <img
-                src="/produciongCurrent.png"
-                alt="Consumption Current"
-                class="rounded-circle"
-                height="200px"
-                widht="180px"
-              />
+        <div class="col">
+          <div class="card" style="width: 20rem">
+            <div class="card-header">
+              <strong>Produciong Current</strong>
             </div>
-            <br />
-            <p class="card-text">{{ values.producing_current }} A</p>
-          </div>
-          <div class="card-footer text-muted">
-            <div>
-              <p>State</p>
+            <div class="card-body">
+              <div>
+                <img
+                  src="/produciongCurrent.png"
+                  alt="Consumption Current"
+                  class="rounded-circle"
+                  height="200px"
+                  widht="180px"
+                />
+              </div>
+              <br />
+              <p class="card-text">{{ values.producing_current }} A</p>
             </div>
-            <div>
-              <div class="row">
-                <div v-show="values.producing_current != 0" class="col">
-                  <button type="button" class="btn btn-success">
-                    Producing
-                  </button>
+            <div class="card-footer text-muted">
+              <div>
+                <p>State</p>
+              </div>
+              <div>
+                <div class="row">
+                  <div v-show="values.producing_current != 0" class="col">
+                    <button type="button" class="btn btn-success">
+                      Producing
+                    </button>
+                  </div>
+                  <div v-show="values.producing_current == 0" class="col">
+                    <button type="button" class="btn btn-danger">
+                      Not producing
+                    </button>
+                  </div>
                 </div>
-                <div v-show="values.producing_current == 0" class="col">
-                  <button type="button" class="btn btn-danger">
-                    Not producing
-                  </button>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3" style="padding-right: 5%">
-        <br />
-        <br />
-        <label class="h3 mr-3 text-gray-800">Show statistics</label>
+        <div class="row">
+          <div class="col-md-3" style="padding-right: 5%">
+            <br />
+            <br />
+            <label class="h3 mr-3 text-gray-800">Show statistics</label>
 
-        <select v-model="opcao" @change="chartChanged($event)">
-          <option disabled value=" ">Select a option</option>
-          <option value="dia">For day</option>
-          <option value="mes">For month</option>
-          <option value="ano">For year</option>
-        </select>
-      </div>
-      <div class="col-md-9"></div>
-    </div>
-    <div class="row">
-      <div class="col-sm-2">
-        <br />
-        <br />
-        <label class="h3 mr-3 text-gray-800">Year</label>
-        <select
-          v-show="anos"
-          v-model="data.ano"
-          @change="dateChanged($event, ano)"
-          style="
-            background: transparent;
-            padding-left: 10px;
-            border: 1px solid black;
+            <select v-model="opcao" @change="chartChanged($event)">
+              <option disabled value=" ">Select a option</option>
+              <option value="dia">For day</option>
+              <option value="mes">For month</option>
+              <option value="ano">For year</option>
+            </select>
+          </div>
+          <div class="col-md-9"></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            <br />
+            <br />
+            <label class="h3 mr-3 text-gray-800">Year</label>
+            <select
+              v-show="anos"
+              v-model="data.ano"
+              @change="dateChanged($event, ano)"
+              style="
+                background: transparent;
+                padding-left: 10px;
+                border: 1px solid black;
+              "
+            >
+              <option v-for="ano in anos" :value="ano" :key="ano">
+                {{ ano }}
+              </option>
+            </select>
+            <div v-show="!anos" class="alert alert-primary" role="alert">
+              Loading...
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <br />
+            <br />
+            <div v-show="opcao == 'dia' || opcao == 'mes'">
+              <label class="h3 mr-3 text-gray-800">Month</label>
+              <select
+                v-show="meses"
+                v-model="data.mes"
+                @change="dateChanged($event, mes)"
+                style="
+                  background: transparent;
+                  padding-left: 10px;
+                  border: 1px solid black;
+                "
+              >
+                <option v-for="mes in meses" :value="mes" :key="mes">
+                  {{ mes }}
+                </option>
+              </select>
+              <div v-show="!meses" class="alert alert-primary" role="alert">
+                Select an year
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <br />
+            <br />
+            <div v-show="opcao == 'dia'">
+              <label class="h3 mr-3 text-gray-800">Day</label>
+              <select
+                v-show="dias"
+                v-model="data.dia"
+                style="
+                  background: transparent;
+                  padding-left: 10px;
+                  border: 1px solid black;
+                "
+              >
+                <option v-for="dia in dias" :value="mes" :key="dia">
+                  {{ dia }}
+                </option>
+              </select>
+              <div v-show="!dias" class="alert alert-primary" role="alert">
+                Select a month
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6"></div>
+        </div>
+        <div
+          class="row"
+          v-show="
+            (opcao == 'dia' && data.dia) ||
+            (opcao == 'mes' && data.mes) ||
+            (opcao == 'ano' && data.ano)
           "
         >
-          <option v-for="ano in anos" :value="ano" :key="ano">
-            {{ ano }}
-          </option>
-        </select>
-        <div v-show="!anos" class="alert alert-primary" role="alert">
-          Loading...
+          <div class="col-md-2">
+            <button class="btn btn-info" @click="getData">Get data</button>
+          </div>
+          <div class="col-md-10"></div>
         </div>
-      </div>
-      <div class="col-sm-2">
-        <br />
-        <br />
-        <div v-show="opcao == 'dia' || opcao == 'mes'">
-          <label class="h3 mr-3 text-gray-800">Month</label>
-          <select
-            v-show="meses"
-            v-model="data.mes"
-            @change="dateChanged($event, mes)"
-            style="
-              background: transparent;
-              padding-left: 10px;
-              border: 1px solid black;
-            "
-          >
-            <option v-for="mes in meses" :value="mes" :key="mes">
-              {{ mes }}
-            </option>
-          </select>
-          <div v-show="!meses" class="alert alert-primary" role="alert">
-            Select an year
+        <div class="row">
+          <div class="col-md-12">
+            <LineChart :key="labels.length" :data="dados" :labels="labels" />
           </div>
         </div>
-      </div>
-      <div class="col-sm-2">
-        <br />
-        <br />
-        <div v-show="opcao == 'dia'">
-          <label class="h3 mr-3 text-gray-800">Day</label>
-          <select
-            v-show="dias"
-            v-model="data.dia"
-            style="
-              background: transparent;
-              padding-left: 10px;
-              border: 1px solid black;
-            "
-          >
-            <option v-for="dia in dias" :value="mes" :key="dia">
-              {{ dia }}
-            </option>
-          </select>
-          <div v-show="!dias" class="alert alert-primary" role="alert">
-            Select a month
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6"></div>
-    </div>
-    <div
-      class="row"
-      v-show="
-        (opcao == 'dia' && data.dia) ||
-        (opcao == 'mes' && data.mes) ||
-        (opcao == 'ano' && data.ano)
-      "
-    >
-      <div class="col-md-2">
-        <button class="btn btn-info" @click="getData">Get data</button>
-      </div>
-      <div class="col-md-10"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <LineChart :key="labels.length" :data="dados" :labels="labels" />
       </div>
     </div>
   </div>

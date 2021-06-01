@@ -30,10 +30,11 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: "Values for day"
+                        text: "Values"
                     }
                 }
             );
+            this.$emit('chart-rendered')
         }
     };
 </script>

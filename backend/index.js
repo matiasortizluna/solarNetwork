@@ -226,7 +226,7 @@ function readDataByDay(dia, mes, ano) {
   console.log(dia + " / " + mes + " / " + ano)
 
   client.db("renewable_db").collection("renewable_db_collection").find({
-    $or: [
+    $and: [
       { 'date.year': { $in: [ano] } },
       { 'date.month': { $in: [mes] } },
       { 'date.day': { $in: [dia] } }]
@@ -240,7 +240,7 @@ function readDataByDay(dia, mes, ano) {
 
       var media_arr = []
       var media = {}
-      for (var i = 1; i < 25; i++) {
+      for (var i = 0; i < 24; i++) {
         media[i] = {
           consumed: 0.0,
           produced: 0.0,
@@ -254,7 +254,7 @@ function readDataByDay(dia, mes, ano) {
           }
         })
       }
-      for (var i = 1; i < 25; i++) {
+      for (var i = 0; i < 24; i++) {
         if (media[i].consumed != 0.0 && media[i].produced != 0.0) {
           media[i].consumed = media[i].consumed / media[i].items
           media[i].produced = media[i].produced / media[i].items
@@ -296,7 +296,7 @@ function readDataByMonth(mes, ano) {
   console.log(mes + " / " + ano)
 
   client.db("renewable_db").collection("renewable_db_collection").find({
-    $or: [
+    $and: [
       { 'date.year': { $in: [ano] } },
       { 'date.month': { $in: [mes] } }]
   }).toArray(function (err, res) {

@@ -3,24 +3,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-      <button type="button" class="btn btn-info" @click="getAllValues">
-        Get All Entries
-      </button>
-      <button type="button" class="btn btn-info" @click="getAllMonths">
-        Get All Months
-      </button>
-      <button type="button" class="btn btn-info" @click="createValues">
-        Create New Values
-      </button>
-      <button type="button" class="btn btn-info" @click="getDataByDay">
-        Get Data by Day
-      </button>
-      <button type="button" class="btn btn-info" @click="getDataByMonth">
-        Get Data by Month
-      </button>
-      <button type="button" class="btn btn-info" @click="getDataByYear">
-        Get Data by Year
-      </button>
     </div>
     <!-- Content Row -->
     <div class="row">
@@ -284,7 +266,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <LineChart :key="dateString" :data="dados" :labels="labels" />
+        <LineChart :key="rerender" :data="dados" :labels="labels" />
       </div>
     </div>
   </div>
@@ -306,6 +288,7 @@ export default {
   },
   data: function () {
     return {
+        rerender: 1,
       values: {},
       dados: {
         consumed: [],
@@ -551,7 +534,7 @@ export default {
                     }
                 )
 
-                this.dateString = this.data.dia+""+this.data.mes+""+this.data.ano;
+                this.rerender = !this.rerender;
             });
 
     },

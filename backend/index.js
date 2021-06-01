@@ -500,24 +500,24 @@ function addEntry(payload) {
 //Endpoint to add an entry to the database
 app.post('/payload', (req, res) => {
   // If Databse configured
-  //let body = req.body
+  let body = req.body
   // If NO Databse configured
 
-  let body = {
-    battery_voltage: 16,
-    solar_panel_voltage: 16,
-    consumption_current: 0.26,
-    producing_current: 0.46,
-    full_date: '2021-05-31 2:58:43',
-    date: {
-      year: '2021',
-      day: '31',
-      month: '05',
-      hour: '03',
-      minute: '23',
-      second: '12'
-    }
-  }
+  // let body = {
+  //   battery_voltage: 16,
+  //   solar_panel_voltage: 16,
+  //   consumption_current: 0.26,
+  //   producing_current: 0.46,
+  //   full_date: '2021-05-31 2:58:43',
+  //   date: {
+  //     year: '2021',
+  //     day: '31',
+  //     month: '05',
+  //     hour: '03',
+  //     minute: '23',
+  //     second: '12'
+  //   }
+  // }
 
   console.log(body)
   try {

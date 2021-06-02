@@ -27,13 +27,22 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(port, () => //console.log(`Hello world app listening on port ${port}!`));
+app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
 
 //const importedFunctions = require('./functions.js')
 
 app.get('/', (req, res) => {
   res.send('Hello World, this is our project of ESS. Polytechnic of Leiria.');
 });
+//-------------------------- LOGGING IN  --------------------------------------------
+app.post('/login', (req,res) => {
+  let password = req.body.password;
+  if(password === "M4nr3n3w4bl3s#2021")
+    res.send("")
+  else
+    res.status(403).send({"message": "Password incorrect!"})
+})
+
 
 //------------------ LER ULTIMO REGISTO DA BD  --------------------------------------
 //Function that reads the most recent entry in database
@@ -560,6 +569,8 @@ app.post('/payload', (req, res) => {
   //   }
   // }
 
+  if(typeof body === "string")
+        body = JSON.parse(body)
   //console.log(body)
   try {
     response = addEntry(body)

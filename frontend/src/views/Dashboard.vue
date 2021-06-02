@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <!--<div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
             <button type="button" class="btn btn-info" @click="getAllValues">
                 Get All Entries
@@ -28,7 +28,7 @@
             <button type="button" class="btn btn-info" @click="getDataByYear">
                 Get Data by Year
             </button>
-        </div>
+        </div>-->
         <!-- Content Row -->
         <div class="row">
             <!-- Pending Requests Card Example -->
@@ -56,12 +56,12 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div v-show="values.battery_voltage != 0" class="col">
+                                <div v-show="values.battery_voltage" class="col">
                                     <button type="button" class="btn btn-success">
                                         Connected
                                     </button>
                                 </div>
-                                <div v-show="values.battery_voltage == 0" class="col">
+                                <div v-show="!values.battery_voltage" class="col">
                                     <button type="button" class="btn btn-danger">
                                         Disconnected
                                     </button>
@@ -95,12 +95,12 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div v-show="values.solar_panel_voltage != 0" class="col">
+                                <div v-show="values.solar_panel_voltage" class="col">
                                     <button type="button" class="btn btn-success">
                                         Connected
                                     </button>
                                 </div>
-                                <div v-show="values.solar_panel_voltage == 0" class="col">
+                                <div v-show="!values.solar_panel_voltage" class="col">
                                     <button type="button" class="btn btn-danger">
                                         Disconnected
                                     </button>
@@ -134,12 +134,12 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div v-show="values.consumption_current != 0" class="col">
+                                <div v-show="values.consumption_current" class="col">
                                     <button type="button" class="btn btn-success">
                                         Consuming
                                     </button>
                                 </div>
-                                <div v-show="values.consumption_current == 0" class="col">
+                                <div v-show="!values.consumption_current" class="col">
                                     <button type="button" class="btn btn-danger">
                                         Not consuming
                                     </button>
@@ -173,12 +173,12 @@
                         </div>
                         <div>
                             <div class="row">
-                                <div v-show="values.producing_current != 0" class="col">
+                                <div v-show="values.producing_current" class="col">
                                     <button type="button" class="btn btn-success">
                                         Producing
                                     </button>
                                 </div>
-                                <div v-show="values.producing_current == 0" class="col">
+                                <div v-show="!values.producing_current" class="col">
                                     <button type="button" class="btn btn-danger">
                                         Not producing
                                     </button>
@@ -414,7 +414,7 @@
         methods: {
             getValues: function () {
                 axios
-                    .get("http://localhost:8080/payload")
+                    .get("http://"+window.location.host.split(":")[0]+":8080/payload")
                     .then((response) => {
                         //console.log("LAST VALUE");
                         //console.log(response);
@@ -426,7 +426,7 @@
                     });
             },
             getAllValues: function () {
-                axios.get("http://localhost:8080/payload/all").then((response) => {
+                axios.get("http://"+window.location.host.split(":")[0]+":8080/payload/all").then((response) => {
                     console.log("ALL ENTRIES");
                     //this.values = response.data;
                     console.log(response);
@@ -435,7 +435,7 @@
             getDataByDay: function () {
                 axios
                     .get(
-                        "http://localhost:8080/values/hours/" +
+                        "http://"+window.location.host.split(":")[0]+":8080/values/hours/" +
                         "31" +
                         "/" +
                         "05" +
@@ -452,7 +452,7 @@
             },
             getDataByMonth: function () {
                 axios
-                    .get("http://localhost:8080/values/days/" + "05" + "/" + "2021")
+                    .get("http://"+window.location.host.split(":")[0]+":8080/values/days/" + "05" + "/" + "2021")
                     .then((response) => {
                         console.log("DATA OF MONTH [DAYS]");
                         console.log(response);
@@ -463,7 +463,7 @@
             },
             getDataByYear: function () {
                 axios
-                    .get("http://localhost:8080/values/months/" + "2021")
+                    .get("http://"+window.location.host.split(":")[0]+":8080/values/months/" + "2021")
                     .then((response) => {
                         console.log("DATA OF YEAR [MONTHS]");
                         console.log(response);
@@ -475,7 +475,7 @@
             getAllDaysByMonthAndYear: function (month, year) {
                 console.log("Entrou");
                 axios
-                    .get("http://localhost:8080/days/" + month + "/" + year)
+                    .get("http://"+window.location.host.split(":")[0]+":8080/days/" + month + "/" + year)
                     .then((response) => {
                         console.log("MESES");
                         //console.log(response);
@@ -484,7 +484,7 @@
             },
             getAllMonthsByYear: function (year) {
                 console.log("Entrou 1 ");
-                axios.get("http://localhost:8080/months/" + year).then((response) => {
+                axios.get("http://"+window.location.host.split(":")[0]+":8080/months/" + year).then((response) => {
                     console.log("Ano");
                     //console.log(response);
                     this.meses = response.data;
@@ -492,7 +492,7 @@
                 });
             },
             getAllYears: function () {
-                axios.get("http://localhost:8080/years").then((response) => {
+                axios.get("http://"+window.location.host.split(":")[0]+":8080/years").then((response) => {
                     //console.log("ANOS");
                     //console.log(response);
                     this.anos = response.data;
@@ -517,7 +517,7 @@
                         second: "43",
                     },
                 };
-                axios.post("http://localhost:8080/payload", body).then((response) => {
+                axios.post("http://"+window.location.host.split(":")[0]+":8080/payload", body).then((response) => {
                     //console.log("NEW ENTRY");
                     //console.log(response);
                 });
@@ -555,7 +555,7 @@
 
                 if (this.data.dia) {
                     url =
-                        "http://localhost:8080/values/hours/" +
+                        "http://"+window.location.host.split(":")[0]+":8080/values/hours/" +
                         this.data.dia +
                         "/" +
                         this.data.mes +
@@ -563,20 +563,20 @@
                         this.data.ano;
                 } else if (this.data.mes) {
                     url =
-                        "http://localhost:8080/values/days/" +
+                        "http://"+window.location.host.split(":")[0]+":8080/values/days/" +
                         this.data.mes +
                         "/" +
                         this.data.ano;
                 } else {
-                    url = "http://localhost:8080/values/months/" + this.data.ano;
+                    url = "http://"+window.location.host.split(":")[0]+":8080/values/months/" + this.data.ano;
                 }
 
                 axios.get(url).then((response) => {
                     console.log(response.data);
 
                     response.data.forEach((item) => {
-                        this.dados.consumed.push(item.consumed);
-                        this.dados.produced.push(item.produced);
+                        this.dados.consumed.push(item.consumed*12.0);
+                        this.dados.produced.push(item.produced*12.0);
 
                     });
                     this.rerender = !this.rerender;
@@ -585,6 +585,7 @@
             },
         },
         mounted() {
+            console.log(window.location.pathname)
             this.labels = this.labelsDef.dia;
             this.getValues();
         },

@@ -30,7 +30,7 @@
                     maintainAspectRatio: false,
                     title: {
                         display: true,
-                        text: "Values"
+                        text: "Values in Whatts (W)"
                     }
                 }
             );

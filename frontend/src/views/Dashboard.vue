@@ -3,31 +3,31 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <button type="button" class="btn btn-info" @click="getAllValues">
-                Get All Entries
-            </button>
-            <button type="button" class="btn btn-info" @click="getAllMonthsByYear">
-                Get All Months
-            </button>
-            <button
-                type="button"
-                class="btn btn-info"
-                @click="getAllDaysByMonthAndYear"
-            >
-                Get All Days
-            </button>
-            <button type="button" class="btn btn-info" @click="createValues">
-                Create New Values
-            </button>
-            <button type="button" class="btn btn-info" @click="getDataByDay">
-                Get Data by Day
-            </button>
-            <button type="button" class="btn btn-info" @click="getDataByMonth">
-                Get Data by Month
-            </button>
-            <button type="button" class="btn btn-info" @click="getDataByYear">
-                Get Data by Year
-            </button>
+<!--            <button type="button" class="btn btn-info" @click="getAllValues">-->
+<!--                Get All Entries-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-info" @click="getAllMonthsByYear">-->
+<!--                Get All Months-->
+<!--            </button>-->
+<!--            <button-->
+<!--                type="button"-->
+<!--                class="btn btn-info"-->
+<!--                @click="getAllDaysByMonthAndYear"-->
+<!--            >-->
+<!--                Get All Days-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-info" @click="createValues">-->
+<!--                Create New Values-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-info" @click="getDataByDay">-->
+<!--                Get Data by Day-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-info" @click="getDataByMonth">-->
+<!--                Get Data by Month-->
+<!--            </button>-->
+<!--            <button type="button" class="btn btn-info" @click="getDataByYear">-->
+<!--                Get Data by Year-->
+<!--            </button>-->
         </div>
         <!-- Content Row -->
         <div class="row">
@@ -419,6 +419,7 @@
                         //console.log("LAST VALUE");
                         //console.log(response);
                         this.values = response.data;
+
                         this.getAllYears();
                     })
                     .catch((err) => {
@@ -427,9 +428,9 @@
             },
             getAllValues: function () {
                 axios.get("http://localhost:8080/payload/all").then((response) => {
-                    console.log("ALL ENTRIES");
+                    // console.log("ALL ENTRIES");
                     //this.values = response.data;
-                    console.log(response);
+                    // console.log(response);
                 });
             },
             getDataByDay: function () {
@@ -443,8 +444,8 @@
                         "2021"
                     )
                     .then((response) => {
-                        console.log("DATA OF DAY [HOURS]");
-                        console.log(response);
+                        // console.log("DATA OF DAY [HOURS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
@@ -454,8 +455,8 @@
                 axios
                     .get("http://localhost:8080/values/days/" + "05" + "/" + "2021")
                     .then((response) => {
-                        console.log("DATA OF MONTH [DAYS]");
-                        console.log(response);
+                        // console.log("DATA OF MONTH [DAYS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
@@ -465,27 +466,26 @@
                 axios
                     .get("http://localhost:8080/values/months/" + "2021")
                     .then((response) => {
-                        console.log("DATA OF YEAR [MONTHS]");
-                        console.log(response);
+                        // console.log("DATA OF YEAR [MONTHS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
                     });
             },
             getAllDaysByMonthAndYear: function (month, year) {
-                console.log("Entrou");
+                // console.log("Entrou");
                 axios
                     .get("http://localhost:8080/days/" + month + "/" + year)
                     .then((response) => {
-                        console.log("MESES");
+                        // console.log("MESES");
                         //console.log(response);
                         this.dias = response.data;
                     });
             },
             getAllMonthsByYear: function (year) {
-                console.log("Entrou 1 ");
                 axios.get("http://localhost:8080/months/" + year).then((response) => {
-                    console.log("Ano");
+                    // console.log("Ano");
                     //console.log(response);
                     this.meses = response.data;
                     //console.log(this.meses);
@@ -572,9 +572,12 @@
                 }
 
                 axios.get(url).then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     response.data.forEach((item) => {
+                        item.consumed =item.consumed *12;
+                        item.produced = item.produced*12;
+
                         this.dados.consumed.push(item.consumed);
                         this.dados.produced.push(item.produced);
 

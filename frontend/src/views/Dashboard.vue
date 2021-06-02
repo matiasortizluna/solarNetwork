@@ -419,6 +419,7 @@
                         //console.log("LAST VALUE");
                         //console.log(response);
                         this.values = response.data;
+
                         this.getAllYears();
                     })
                     .catch((err) => {
@@ -429,7 +430,7 @@
                 axios.get("http://"+window.location.host.split(":")[0]+":8080/payload/all").then((response) => {
                     console.log("ALL ENTRIES");
                     //this.values = response.data;
-                    console.log(response);
+                    // console.log(response);
                 });
             },
             getDataByDay: function () {
@@ -443,8 +444,8 @@
                         "2021"
                     )
                     .then((response) => {
-                        console.log("DATA OF DAY [HOURS]");
-                        console.log(response);
+                        // console.log("DATA OF DAY [HOURS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
@@ -454,8 +455,8 @@
                 axios
                     .get("http://"+window.location.host.split(":")[0]+":8080/values/days/" + "05" + "/" + "2021")
                     .then((response) => {
-                        console.log("DATA OF MONTH [DAYS]");
-                        console.log(response);
+                        // console.log("DATA OF MONTH [DAYS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
@@ -465,19 +466,19 @@
                 axios
                     .get("http://"+window.location.host.split(":")[0]+":8080/values/months/" + "2021")
                     .then((response) => {
-                        console.log("DATA OF YEAR [MONTHS]");
-                        console.log(response);
+                        // console.log("DATA OF YEAR [MONTHS]");
+                        // console.log(response);
                         //this.dados.consumed = response.data.consumed;
                         //this.dados.produced = response.data.produced;
                         //console.log(this.dados);
                     });
             },
             getAllDaysByMonthAndYear: function (month, year) {
-                console.log("Entrou");
+                // console.log("Entrou");
                 axios
                     .get("http://"+window.location.host.split(":")[0]+":8080/days/" + month + "/" + year)
                     .then((response) => {
-                        console.log("MESES");
+                        // console.log("MESES");
                         //console.log(response);
                         this.dias = response.data;
                     });
@@ -572,7 +573,7 @@
                 }
 
                 axios.get(url).then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     response.data.forEach((item) => {
                         this.dados.consumed.push(item.consumed*12.0);
